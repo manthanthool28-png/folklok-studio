@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
+import { ScrollProgress } from './components/ScrollProgress';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Instruments } from './pages/Instruments';
@@ -48,6 +49,7 @@ export default function App() {
       >
         Skip to content
       </a>
+      <ScrollProgress />
       <div className="flex min-h-screen flex-col">
         <Nav />
         <main id="main" className="flex-1">

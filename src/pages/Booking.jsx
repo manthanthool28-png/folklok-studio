@@ -5,6 +5,7 @@ import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededPanel } from '../components/Needed';
 import { IconMail, IconPhone, IconArrow } from '../components/Icons';
+import { GlassCard } from '../components/Glass';
 
 const EVENT_TYPES = [
   'Festival',
@@ -25,8 +26,10 @@ const EMPTY = {
 };
 
 const field =
-  'w-full rounded-lg border border-espresso/20 bg-cream px-4 py-3 font-body text-espresso ' +
-  'placeholder:text-espresso/35 focus:border-marigold focus:outline-none';
+  'w-full rounded-2xl border border-espresso/15 bg-white/55 px-4 py-3.5 font-body text-espresso ' +
+  'backdrop-blur-md transition-all duration-300 placeholder:text-espresso/35 ' +
+  'focus:border-marigold focus:bg-white/80 focus:outline-none ' +
+  'focus:shadow-[0_0_0_4px_rgba(245,183,0,0.18)]';
 
 const labelCls = 'block font-body text-sm font-600 text-espresso';
 
@@ -94,7 +97,7 @@ export function Booking() {
         <div className="mx-auto max-w-5xl px-5 py-18 sm:px-8">
           {/* Direct contact */}
           <Reveal className="grid gap-5 sm:grid-cols-2">
-            <div className="rounded-xl border border-espresso/12 bg-cream-deep p-6">
+            <GlassCard tone="light" spotlight className="p-6">
               <p className="flex items-center gap-2 font-body text-[0.7rem] font-600 uppercase tracking-[0.16em] text-terracotta">
                 <IconMail className="h-4 w-4" /> Email
               </p>
@@ -107,8 +110,8 @@ export function Booking() {
                   <Needed>Booking email</Needed>
                 )}
               </p>
-            </div>
-            <div className="rounded-xl border border-espresso/12 bg-cream-deep p-6">
+            </GlassCard>
+            <GlassCard tone="light" spotlight className="p-6">
               <p className="flex items-center gap-2 font-body text-[0.7rem] font-600 uppercase tracking-[0.16em] text-terracotta">
                 <IconPhone className="h-4 w-4" /> Phone
               </p>
@@ -124,7 +127,7 @@ export function Booking() {
                   <Needed>Phone number</Needed>
                 )}
               </p>
-            </div>
+            </GlassCard>
           </Reveal>
 
           <Divider />
@@ -154,7 +157,7 @@ export function Booking() {
             <Reveal delay={80} className="mt-6">
               <div
                 data-needed
-                className="rounded-xl border-2 border-dashed border-terracotta/45 bg-terracotta/5 p-6"
+                className="rounded-3xl border border-dashed border-terracotta/45 bg-terracotta/7 p-7 backdrop-blur-md"
               >
                 <p className="font-body text-[0.72rem] font-600 uppercase tracking-[0.14em] text-terracotta">
                   Form cannot send yet

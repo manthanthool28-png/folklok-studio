@@ -3,11 +3,12 @@ import { PageHeader } from '../components/PageHeader';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededBox, NeededPanel } from '../components/Needed';
+import { GlassCard, GlassLayer } from '../components/Glass';
 
 function MemberCard({ member, index }) {
   return (
     <Reveal delay={(index % 3) * 90}>
-      <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-espresso/12 bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-marigold hover:shadow-xl hover:shadow-espresso/10">
+      <GlassCard tone="light" tilt spotlight className="group flex h-full flex-col overflow-hidden">
         {member.photo ? (
           <img
             src={member.photo}
@@ -22,7 +23,7 @@ function MemberCard({ member, index }) {
           </NeededBox>
         )}
 
-        <div className="flex flex-1 flex-col p-6">
+        <GlassLayer className="flex flex-1 flex-col p-6">
           {member.mr && <p className="font-display text-xl text-marigold">{member.mr}</p>}
           <h2 className="mt-0.5 font-display text-2xl text-espresso">{member.name}</h2>
           <p className="mt-1 font-body text-sm font-600 uppercase tracking-[0.1em] text-terracotta">
@@ -31,8 +32,8 @@ function MemberCard({ member, index }) {
           <div className="mt-3 flex-1 font-body text-espresso/70">
             {member.bio ? <p>{member.bio}</p> : <Needed>Short bio</Needed>}
           </div>
-        </div>
-      </article>
+        </GlassLayer>
+      </GlassCard>
     </Reveal>
   );
 }

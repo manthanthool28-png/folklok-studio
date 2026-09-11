@@ -1,16 +1,24 @@
 import { Reveal } from './Reveal';
 import { Swirl } from './Swirl';
+import { Aurora } from './Aurora';
 
 /** Shared masthead for every page but Home. */
 export function PageHeader({ mr, en, lead }) {
   return (
-    <header className="texture-grain relative overflow-hidden bg-espresso pb-16 pt-34 sm:pb-20 sm:pt-40">
-      <div className="mx-auto max-w-4xl px-5 text-center sm:px-8">
+    <header className="relative overflow-hidden bg-espresso pb-20 pt-36 sm:pb-24 sm:pt-44">
+      <Aurora />
+      <div className="texture-grain absolute inset-0" />
+
+      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
-          <p className="font-display text-2xl text-marigold sm:text-3xl">{mr}</p>
-          <h1 className="mt-2 font-display text-4xl text-cream sm:text-5xl md:text-6xl">{en}</h1>
+          <span
+            className="glass inline-block rounded-full px-5 py-1.5 font-display text-lg text-marigold sm:text-xl"
+          >
+            {mr}
+          </span>
+          <h1 className="mt-5 font-display text-4xl text-cream sm:text-6xl md:text-7xl">{en}</h1>
           {lead && (
-            <p className="mx-auto mt-5 max-w-prose font-body text-base text-cream/75 sm:text-lg">
+            <p className="mx-auto mt-5 max-w-prose font-body text-base text-cream/72 sm:text-lg">
               {lead}
             </p>
           )}

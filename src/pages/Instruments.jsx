@@ -4,13 +4,14 @@ import { PageHeader } from '../components/PageHeader';
 import { Reveal } from '../components/Reveal';
 import { Needed, NeededBox } from '../components/Needed';
 import { SwirlCurl } from '../components/Swirl';
+import { GlassCard, GlassLayer } from '../components/Glass';
 
 function InstrumentCard({ item, index }) {
   const [playing, setPlaying] = useState(false);
 
   return (
     <Reveal delay={(index % 3) * 90}>
-      <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-espresso/12 bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-marigold hover:shadow-xl hover:shadow-espresso/10">
+      <GlassCard tone="light" tilt spotlight className="group flex h-full flex-col overflow-hidden">
         <div className="relative">
           {item.image ? (
             <img
@@ -21,7 +22,7 @@ function InstrumentCard({ item, index }) {
               className="aspect-[4/3] w-full object-cover"
             />
           ) : (
-            <NeededBox className="rounded-none border-0 border-b-2">
+            <NeededBox className="rounded-none border-0 border-b">
               Photo or illustration of the {item.en}
             </NeededBox>
           )}
@@ -37,7 +38,7 @@ function InstrumentCard({ item, index }) {
           )}
         </div>
 
-        <div className="flex flex-1 flex-col p-6">
+        <GlassLayer className="flex flex-1 flex-col p-6">
           <p className="font-display text-2xl text-marigold">{item.mr}</p>
           <h2 className="mt-0.5 font-display text-xl text-espresso">{item.en}</h2>
 
@@ -51,7 +52,7 @@ function InstrumentCard({ item, index }) {
                 type="button"
                 onClick={() => setPlaying((v) => !v)}
                 aria-pressed={playing}
-                className="mt-5 self-start rounded-full bg-espresso px-5 py-2.5 font-body text-sm font-600 text-cream transition-colors hover:bg-espresso-light"
+                className="mt-5 self-start rounded-full bg-espresso px-5 py-2.5 font-body text-sm font-600 text-cream shadow-lg shadow-espresso/20 transition-all duration-300 hover:bg-espresso-light hover:shadow-xl"
               >
                 {playing ? 'Stop' : `Hear the ${item.en}`}
               </button>
@@ -70,8 +71,8 @@ function InstrumentCard({ item, index }) {
               <Needed>Audio clip</Needed>
             </p>
           )}
-        </div>
-      </article>
+        </GlassLayer>
+      </GlassCard>
     </Reveal>
   );
 }
@@ -100,7 +101,7 @@ export function Instruments() {
             <Reveal className="mb-10">
               <div
                 data-needed
-                className="rounded-xl border-2 border-dashed border-terracotta/45 bg-terracotta/5 p-6"
+                className="rounded-3xl border border-dashed border-terracotta/45 bg-terracotta/7 p-7 backdrop-blur-md"
               >
                 <p className="font-body text-[0.72rem] font-600 uppercase tracking-[0.14em] text-terracotta">
                   Confirm this list

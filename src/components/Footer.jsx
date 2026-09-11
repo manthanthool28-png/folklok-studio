@@ -6,12 +6,16 @@ import { Socials } from './Socials';
 import { Needed } from './Needed';
 import { IconMail, IconPhone } from './Icons';
 import { Swirl } from './Swirl';
+import { Aurora } from './Aurora';
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="texture-grain bg-espresso text-cream">
+    <footer className="relative overflow-hidden bg-espresso text-cream">
+      <Aurora className="opacity-60" />
+      <div className="texture-grain absolute inset-0" />
+      <div className="relative">
       <Swirl className="mx-auto h-10 w-full max-w-lg pt-12 opacity-45" color="var(--color-marigold)" width={2} />
 
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
@@ -71,7 +75,7 @@ export function Footer() {
 
           <Link
             to="/booking"
-            className="mt-6 inline-block rounded-full bg-marigold px-5 py-2.5 font-body text-sm font-600 text-espresso transition-colors hover:bg-marigold-light"
+            className="mt-6 inline-block rounded-full bg-marigold px-5 py-2.5 font-body text-sm font-600 text-espresso shadow-[0_6px_22px_rgba(245,183,0,0.3)] transition-all duration-300 hover:bg-marigold-light hover:shadow-[0_10px_30px_rgba(245,183,0,0.45)]"
           >
             Book Folklok
           </Link>
@@ -85,6 +89,7 @@ export function Footer() {
             {site.baseCity ? site.baseCity : <Needed>Base city</Needed>} · Marathi folk music
           </p>
         </div>
+      </div>
       </div>
     </footer>
   );

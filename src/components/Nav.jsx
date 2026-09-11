@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import wordmark from '../assets/folklok-wordmark.png';
 
@@ -12,19 +12,50 @@ export const NAV_LINKS = [
   { to: '/booking', label: 'Booking', mr: 'बुकिंग' },
 ];
 
+/**
+ * A single marigold pill that slides between nav items rather than one
+ * highlight per item switching on and off. It's the detail that makes a
+ * navbar feel native: the eye tracks one object moving, so the change of
+ * section reads as continuous.
+ */
+function useSlidingIndicator(pathname) {
+  const listRef = useRef(null);
+  const [box, setBox] = useState(null);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const list = listRef.current;
+      if (!list) return;
+      const active = list.querySelector('[data-active="true"]');
+      if (!active) return setBox(null);
+      setBox({ left: active.offsetLeft, width: active.offsetWidth });
+    };
+
+    measure();
+
+    // Webfonts land after first paint and change the text width, so measure
+    // again once they're ready or the pill sits slightly off.
+    document.fonts?.ready.then(measure).catch(() => {});
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [pathname]);
+
+  return { listRef, box };
+}
+
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const { listRef, box } = useSlidingIndicator(pathname);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close the drawer on navigation, and don't let the page scroll behind it.
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -33,86 +64,94 @@ export function Nav() {
     };
   }, [open]);
 
-  const onHome = pathname === '/';
-  const solid = scrolled || !onHome || open;
-
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        solid ? 'texture-grain bg-espresso shadow-lg shadow-ink/20' : 'bg-transparent'
-      }`}
-    >
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <nav
         aria-label="Main"
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
+        className={`glass pointer-events-auto mx-auto flex items-center justify-between rounded-full pl-4 pr-2
+          transition-all duration-500 ease-[var(--ease-out-quint)] sm:pl-6
+          ${scrolled ? 'max-w-5xl py-1.5' : 'max-w-6xl py-2.5'}`}
       >
-        <Link to="/" className="shrink-0" aria-label="Folklok — home">
+        <Link to="/" className="shrink-0 py-1" aria-label="Folklok — home">
           <img
             src={wordmark}
             alt="Folklok"
             width="1782"
             height="919"
-            className="h-11 w-auto transition-transform duration-300 hover:scale-[1.04] md:h-12"
+            className={`w-auto transition-all duration-500 ease-[var(--ease-out-quint)]
+              ${scrolled ? 'h-8' : 'h-10'}`}
           />
         </Link>
 
-        <ul className="hidden items-center gap-7 lg:flex">
+        <div ref={listRef} className="relative hidden items-center lg:flex">
+          {/* The pill itself — one element, moved. */}
+          {box && (
+            <span
+              aria-hidden="true"
+              className="absolute inset-y-0 rounded-full bg-marigold"
+              style={{
+                left: box.left,
+                width: box.width,
+                transition:
+                  'left 0.5s var(--ease-spring), width 0.5s var(--ease-spring)',
+              }}
+            />
+          )}
+
           {NAV_LINKS.map((link) => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                end={link.to === '/'}
-                className={({ isActive }) =>
-                  `relative font-body text-sm font-500 tracking-wide transition-colors ${
-                    isActive ? 'text-marigold' : 'text-cream/85 hover:text-marigold'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {link.label}
-                    <span
-                      className={`absolute -bottom-1.5 left-0 h-px bg-marigold transition-all duration-300 ${
-                        isActive ? 'w-full' : 'w-0'
-                      }`}
-                    />
-                  </>
-                )}
-              </NavLink>
-            </li>
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === '/'}
+              data-active={pathname === link.to}
+              className={({ isActive }) =>
+                `relative z-10 rounded-full px-4 py-2 font-body text-sm font-500 transition-colors duration-300 ${
+                  isActive ? 'text-espresso' : 'text-cream/80 hover:text-cream'
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
           ))}
-        </ul>
+        </div>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="flex h-11 w-11 items-center justify-center rounded-md text-cream lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-cream transition-colors hover:bg-cream/10 lg:hidden"
         >
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            {open ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            {open ? <path d="M5 5l14 14M19 5L5 19" /> : <path d="M4 8h16M4 16h16" />}
           </svg>
         </button>
       </nav>
 
       {open && (
-        <div id="mobile-nav" className="texture-grain border-t border-cream/12 bg-espresso lg:hidden">
-          <ul className="mx-auto max-w-7xl px-5 pb-7 pt-3 sm:px-8">
-            {NAV_LINKS.map((link) => (
-              <li key={link.to} className="border-b border-cream/10 last:border-0">
+        <div
+          id="mobile-nav"
+          className="glass pointer-events-auto mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl lg:hidden"
+        >
+          <ul className="p-2">
+            {NAV_LINKS.map((link, i) => (
+              <li key={link.to}>
                 <NavLink
                   to={link.to}
                   end={link.to === '/'}
+                  style={{
+                    animation: `reveal-in 0.45s var(--ease-out-quint) both`,
+                    animationDelay: `${i * 40}ms`,
+                  }}
                   className={({ isActive }) =>
-                    `flex items-baseline justify-between py-3.5 font-body transition-colors ${
-                      isActive ? 'text-marigold' : 'text-cream/85'
+                    `flex items-baseline justify-between rounded-2xl px-4 py-3 font-body transition-colors ${
+                      isActive ? 'bg-marigold text-espresso' : 'text-cream/85 hover:bg-cream/10'
                     }`
                   }
                 >
                   <span className="text-lg">{link.label}</span>
-                  <span className="font-display text-sm text-cream/45">{link.mr}</span>
+                  <span className="font-display text-sm opacity-60">{link.mr}</span>
                 </NavLink>
               </li>
             ))}

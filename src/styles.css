@@ -2,8 +2,7 @@
 
 /* ── Folklok brand tokens ──────────────────────────────────────────────
    Palette and type per the brand brief. Espresso grounds the page, cream
-   is the field, marigold is the single loud voice. Terracotta / brass /
-   deep red are festival-textile accents, used sparingly.               */
+   is the field, marigold is the single loud voice.                      */
 @theme {
   --color-cream: #fff8e7;
   --color-cream-deep: #faf3e0;
@@ -21,6 +20,12 @@
      English set as one family rather than two mismatched systems. */
   --font-display: "Eczar", Georgia, serif;
   --font-body: "Mukta", ui-sans-serif, system-ui, sans-serif;
+
+  /* Apple's easing curves. The spring is the one that sells the effect —
+     it overshoots slightly, which is what makes motion feel physical
+     rather than merely animated. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @layer base {
@@ -33,22 +38,25 @@
     background-color: var(--color-cream);
     color: var(--color-ink);
     font-family: var(--font-body);
-    font-weight: 400;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
+  /* Large display type wants negative tracking — the Apple hallmark that
+     makes big headings read as one shape instead of spaced letters. */
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    line-height: 1.15;
+    line-height: 1.1;
     font-weight: 600;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-marigold);
+    outline: 2px solid var(--color-marigold);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   ::selection {
@@ -58,22 +66,101 @@
 }
 
 @layer components {
-  /* Woven cream ground — a faint warp/weft, not a visible pattern. */
-  .texture-cloth {
-    background-image:
-      repeating-linear-gradient(
-        90deg,
-        rgba(59, 31, 14, 0.022) 0 1px,
-        transparent 1px 3px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        rgba(59, 31, 14, 0.022) 0 1px,
-        transparent 1px 3px
-      );
+  /* ── Glass ────────────────────────────────────────────────────────
+     Three things separate real glass from a translucent box: the blur is
+     paired with saturation so colour behind it blooms rather than greys
+     out; a hairline border catches the edge; and an inset highlight along
+     the top edge reads as light landing on a lip. Miss any one and it
+     looks like flat opacity.                                            */
+  .glass {
+    background: color-mix(in oklab, var(--color-espresso) 55%, transparent);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 248, 231, 0.14);
+    box-shadow:
+      0 8px 32px rgba(26, 18, 8, 0.28),
+      inset 0 1px 0 rgba(255, 248, 231, 0.18);
   }
 
-  /* Woodgrain for espresso panels — drum-shell striation. */
+  .glass-light {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 8px 30px rgba(59, 31, 14, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  /* Browsers without backdrop-filter get an opaque panel instead of
+     unreadable text over a busy background. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      background: color-mix(in oklab, var(--color-espresso) 92%, transparent);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.94);
+    }
+  }
+
+  /* ── Pointer spotlight ───────────────────────────────────────────
+     A soft marigold light that tracks the cursor across a surface.
+     --mx/--my are written by useSpotlight; they stay at 50% until the
+     pointer arrives, so a touch device just sees a centred glow.       */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-out-quint);
+    background: radial-gradient(
+      22rem circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--color-marigold) 26%, transparent),
+      transparent 65%
+    );
+  }
+
+  .spotlight:hover::before,
+  .spotlight:focus-within::before {
+    opacity: 1;
+  }
+
+  /* ── Tilt ────────────────────────────────────────────────────────
+     --rx/--ry come from useTilt. Perspective lives on the element so the
+     vanishing point is its own centre, not the page's.                 */
+  .tilt {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+      translateZ(0) scale(var(--tilt-scale, 1));
+    transition: transform 0.5s var(--ease-out-quint);
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .tilt[data-tilting="true"] {
+    /* While the pointer is moving, track it immediately; the slow
+       transition above is what makes the release settle back. */
+    transition: transform 0.12s linear;
+  }
+
+  /* Content lifted off the card face — the parallax that sells the 3D. */
+  .tilt-layer {
+    transform: translateZ(38px);
+  }
+
+  /* ── Texture ─────────────────────────────────────────────────────── */
+  .texture-cloth {
+    background-image:
+      repeating-linear-gradient(90deg, rgba(59, 31, 14, 0.02) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(0deg, rgba(59, 31, 14, 0.02) 0 1px, transparent 1px 3px);
+  }
+
   .texture-grain {
     background-image: repeating-linear-gradient(
       92deg,
@@ -81,17 +168,89 @@
       transparent 2px 7px
     );
   }
+
+  /* ── Aurora ──────────────────────────────────────────────────────
+     Slow-drifting colour behind the glass. Without something moving back
+     there, frosted panels have nothing to refract and the effect is
+     invisible.                                                         */
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: drift var(--dur, 30s) var(--ease-out-quint) infinite alternate;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(6vw, -4vh, 0) scale(1.18);
+    }
+    100% {
+      transform: translate3d(-5vw, 5vh, 0) scale(0.92);
+    }
+  }
+
+  /* ── Marquee ─────────────────────────────────────────────────────
+     The track holds two identical runs of content, so translating by
+     exactly -50% lands the second run where the first began — seamless,
+     with no JavaScript measuring anything.                             */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-dur, 42s) linear infinite;
+  }
+
+  .marquee-wrap:hover .marquee {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* ── Shimmer ─────────────────────────────────────────────────────── */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%) skewX(-20deg);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.32),
+      transparent
+    );
+  }
+
+  .shimmer:hover::after {
+    animation: shimmer 0.9s var(--ease-out-quint);
+  }
+
+  @keyframes shimmer {
+    to {
+      transform: translateX(120%) skewX(-20deg);
+    }
+  }
 }
 
-/* ── Scroll reveal ────────────────────────────────────────────────────
-   Driven by IntersectionObserver in <Reveal>. Kept in CSS so the work
-   happens on the compositor and no animation library ships to phones. */
+/* ── Scroll reveal ──────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(26px) scale(0.985);
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s var(--ease-out-quint),
+    transform 0.8s var(--ease-out-quint);
   will-change: opacity, transform;
 }
 
@@ -100,30 +259,55 @@
   transform: none;
 }
 
-/* The swirl draws itself in as it enters — the recurring transition motif. */
 .swirl-path {
   stroke-dasharray: var(--swirl-len, 400);
   stroke-dashoffset: var(--swirl-len, 400);
-  transition: stroke-dashoffset 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: stroke-dashoffset 1.6s var(--ease-out-quint);
 }
 
 .reveal[data-visible="true"] .swirl-path {
   stroke-dashoffset: 0;
 }
 
+/* Motion is decoration here — every effect above has a still state that
+   works, so reduced-motion switches them all off rather than softening. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .reveal {
+  .reveal,
+  .swirl-path {
     opacity: 1;
     transform: none;
-    transition: none;
-  }
-
-  .swirl-path {
     stroke-dashoffset: 0;
     transition: none;
   }
+
+  .aurora-blob,
+  .marquee,
+  .shimmer::after {
+    animation: none;
+  }
+
+  .tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); }
 }

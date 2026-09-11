@@ -9,9 +9,9 @@
  */
 
 const chip =
-  'inline-flex items-center gap-1.5 rounded-sm border border-dashed border-terracotta ' +
-  'bg-terracotta/8 px-2 py-0.5 align-middle font-body text-[0.7rem] font-600 ' +
-  'uppercase tracking-[0.12em] text-terracotta';
+  'inline-flex items-center gap-1.5 rounded-full border border-dashed border-terracotta ' +
+  'bg-terracotta/10 px-3 py-1 align-middle font-body text-[0.7rem] font-600 ' +
+  'uppercase tracking-[0.12em] text-terracotta backdrop-blur-sm';
 
 /** Inline: stands in for a missing word or short phrase. */
 export function Needed({ children }) {
@@ -29,7 +29,8 @@ export function NeededBox({ children, className = '', aspect = 'aspect-[4/3]' })
     <div
       data-needed
       className={`${aspect} ${className} flex flex-col items-center justify-center gap-2
-        rounded-lg border-2 border-dashed border-terracotta/55 bg-terracotta/6 p-5 text-center`}
+        rounded-3xl border border-dashed border-terracotta/55 bg-terracotta/8 p-5 text-center
+        backdrop-blur-md`}
     >
       <span aria-hidden="true" className="text-xl text-terracotta/70">
         ◆
@@ -49,7 +50,8 @@ export function NeededPanel({ title, children }) {
   return (
     <div
       data-needed
-      className="rounded-xl border-2 border-dashed border-terracotta/45 bg-terracotta/5 p-8 text-center"
+      className="rounded-3xl border border-dashed border-terracotta/45 bg-terracotta/7 p-9 text-center
+        backdrop-blur-md shadow-[0_8px_30px_rgba(59,31,14,0.06)]"
     >
       <p className="font-body text-[0.72rem] font-600 uppercase tracking-[0.14em] text-terracotta">
         Content needed

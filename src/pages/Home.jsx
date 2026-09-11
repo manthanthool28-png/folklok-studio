@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom';
 import site from '../content/site.json';
+import instruments from '../content/instruments.json';
 import wordmark from '../assets/folklok-wordmark.png';
 import { Reveal } from '../components/Reveal';
-import { Swirl, SwirlCurl } from '../components/Swirl';
-import { Divider } from '../components/Divider';
+import { Swirl } from '../components/Swirl';
+import { Aurora } from '../components/Aurora';
+import { Marquee } from '../components/Marquee';
+import { GlassCard, GlassLayer } from '../components/Glass';
+import { MagneticLink } from '../components/MagneticLink';
 import { Socials } from '../components/Socials';
 import { Needed, NeededBox } from '../components/Needed';
 import { IconArrow, IconPin, IconSpotify } from '../components/Icons';
 import { upcomingShows, latestVideo, formatShowDate } from '../lib/content';
+import { useScrollY, useReducedMotion } from '../lib/interactions';
 
 const TEASERS = [
   { to: '/instruments', mr: 'वाद्ये', en: 'Instruments', copy: 'The dholki, the ektara, the tuntune — the voices behind the songs.' },
@@ -18,79 +23,99 @@ const TEASERS = [
 ];
 
 function Hero() {
+  const y = useScrollY();
+  const reduced = useReducedMotion();
+
+  // Layers drift at different rates as you scroll, so the hero has depth
+  // rather than sliding away as one flat sheet.
+  const shift = (rate) => (reduced ? undefined : { transform: `translate3d(0, ${y * rate}px, 0)` });
+
   return (
-    <section className="texture-grain relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-espresso px-5 py-28">
-      {/* Ambient flourishes — the logo's curl, enlarged and slowed right down. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.07]">
-        <SwirlCurl className="absolute -left-16 top-10 h-72 w-72 rotate-12" color="var(--color-marigold)" />
-        <SwirlCurl className="absolute -right-20 bottom-4 h-96 w-96 -rotate-[160deg]" color="var(--color-marigold)" />
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-espresso px-5 py-32">
+      <div style={shift(0.25)} className="absolute inset-0">
+        <Aurora />
       </div>
+      <div className="texture-grain absolute inset-0" />
+
+      <div className="relative mx-auto w-full max-w-3xl" style={shift(-0.12)}>
+        <Reveal>
+          <GlassCard
+            tone="dark"
+            spotlight
+            className="px-6 py-12 text-center sm:px-12 sm:py-16"
+          >
+            <img
+              src={wordmark}
+              alt="Folklok"
+              width="1782"
+              height="919"
+              fetchpriority="high"
+              className="mx-auto w-full max-w-xs drop-shadow-[0_8px_32px_rgba(0,0,0,0.45)] sm:max-w-md"
+            />
+
+            <h1 className="mt-10 font-display text-2xl leading-snug text-cream sm:text-3xl md:text-[2.4rem]">
+              {site.tagline.mr}
+            </h1>
+            <p className="mt-3 font-body text-sm italic text-marigold/90 sm:text-base">
+              {site.tagline.en}
+            </p>
+
+            <Swirl className="mx-auto mt-8 h-8 w-56 opacity-80" color="var(--color-marigold)" width={2} />
+
+            <div className="mt-7 font-body text-base text-cream/75 sm:text-lg">
+              {site.intro ? (
+                <p className="mx-auto max-w-xl">{site.intro}</p>
+              ) : (
+                <p>
+                  <Needed>One-line description of Folklok</Needed>
+                </p>
+              )}
+            </div>
+
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+              <MagneticLink
+                to="/music"
+                className="rounded-full bg-marigold px-7 py-3.5 font-body font-600 text-espresso
+                  shadow-[0_8px_28px_rgba(245,183,0,0.34)] transition-shadow duration-300
+                  hover:shadow-[0_12px_38px_rgba(245,183,0,0.5)]"
+              >
+                Hear the music
+                <IconArrow className="h-4.5 w-4.5" />
+              </MagneticLink>
+              <MagneticLink
+                to="/booking"
+                className="rounded-full border border-cream/30 px-7 py-3.5 font-body font-600 text-cream
+                  transition-colors duration-300 hover:border-marigold hover:text-marigold"
+              >
+                Book us
+              </MagneticLink>
+            </div>
+
+            <Socials className="mt-9 justify-center" />
+          </GlassCard>
+        </Reveal>
+      </div>
+
+      {/* Scroll cue */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 55% at 50% 45%, rgba(245,183,0,0.14), transparent 70%)',
-        }}
-      />
-
-      <div className="relative mx-auto max-w-3xl text-center">
-        <Reveal>
-          <img
-            src={wordmark}
-            alt="Folklok"
-            width="1782"
-            height="919"
-            fetchpriority="high"
-            className="mx-auto w-full max-w-md drop-shadow-[0_6px_28px_rgba(0,0,0,0.4)] sm:max-w-lg"
-          />
-        </Reveal>
-
-        <Reveal delay={160}>
-          <h1 className="mt-9 font-display text-2xl leading-snug text-cream sm:text-3xl md:text-[2.5rem]">
-            {site.tagline.mr}
-          </h1>
-          <p className="mt-3 font-body text-sm italic text-marigold/90 sm:text-base">
-            {site.tagline.en}
-          </p>
-        </Reveal>
-
-        <Reveal delay={280}>
-          <Swirl className="mx-auto mt-8 h-9 w-64 opacity-80" color="var(--color-marigold)" width={2} />
-        </Reveal>
-
-        <Reveal delay={360}>
-          <div className="mt-8 font-body text-base text-cream/75 sm:text-lg">
-            {site.intro ? (
-              <p className="mx-auto max-w-xl">{site.intro}</p>
-            ) : (
-              <p className="mx-auto max-w-xl">
-                <Needed>One-line description of Folklok</Needed>
-              </p>
-            )}
-          </div>
-        </Reveal>
-
-        <Reveal delay={440}>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              to="/music"
-              className="inline-flex items-center gap-2 rounded-full bg-marigold px-7 py-3.5 font-body font-600 text-espresso transition-transform duration-200 hover:scale-[1.03] hover:bg-marigold-light"
-            >
-              Hear the music
-              <IconArrow className="h-4.5 w-4.5" />
-            </Link>
-            <Link
-              to="/booking"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/35 px-7 py-3.5 font-body font-600 text-cream transition-colors duration-200 hover:border-marigold hover:text-marigold"
-            >
-              Book us
-            </Link>
-          </div>
-          <Socials className="mt-9 justify-center" />
-        </Reveal>
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 text-cream/40"
+        style={{ animation: 'float 2.6s ease-in-out infinite' }}
+      >
+        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+          <path d="M12 5v14M6 13l6 6 6-6" />
+        </svg>
       </div>
     </section>
+  );
+}
+
+function Ticker() {
+  const items = instruments.items.map((i) => ({ mr: i.mr, en: i.en }));
+  return (
+    <div className="relative border-y border-cream/10 bg-espresso-light py-5">
+      <Marquee items={items} duration="38s" />
+    </div>
   );
 }
 
@@ -98,78 +123,83 @@ function Highlights() {
   const next = upcomingShows()[0];
   const video = latestVideo();
   const when = next ? formatShowDate(next) : null;
+  const spotify = site.socials.find((s) => s.id === 'spotify')?.url;
+
+  const cards = [
+    {
+      eyebrow: 'Latest release',
+      title: video?.title ?? null,
+      sub: video?.releaseDate ?? null,
+      to: '/music',
+      cta: 'Watch it',
+      missing: 'Latest release',
+    },
+    {
+      eyebrow: 'Next show',
+      title: when?.full ?? null,
+      sub: next ? `${next.venue}${next.city ? `, ${next.city}` : ''}` : null,
+      icon: IconPin,
+      to: '/shows',
+      cta: 'All shows',
+      missing: 'Next show',
+    },
+    {
+      eyebrow: 'Listen',
+      title: spotify ? 'On Spotify' : null,
+      href: spotify,
+      cta: 'Play now',
+      icon: IconSpotify,
+      missing: 'Spotify artist link',
+    },
+  ];
 
   return (
-    <section className="texture-cloth border-y border-espresso/10 bg-cream-deep">
-      <div className="mx-auto grid max-w-7xl gap-px overflow-hidden px-5 py-2 sm:px-8 md:grid-cols-3">
-        {/* Latest release */}
-        <Reveal className="px-2 py-8 md:px-7">
-          <p className="font-body text-[0.7rem] font-600 uppercase tracking-[0.16em] text-terracotta">
-            Latest release
-          </p>
-          {video ? (
-            <>
-              <h2 className="mt-2 font-display text-2xl text-espresso">{video.title}</h2>
-              {video.releaseDate && (
-                <p className="mt-1 font-body text-sm text-espresso/60">{video.releaseDate}</p>
-              )}
-              <Link to="/music" className="mt-3 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso underline decoration-marigold decoration-2 underline-offset-4">
-                Watch it <IconArrow className="h-4 w-4" />
-              </Link>
-            </>
-          ) : (
-            <p className="mt-3">
-              <Needed>Latest release</Needed>
-            </p>
-          )}
-        </Reveal>
+    <section className="texture-cloth relative bg-cream-deep py-16">
+      <div className="mx-auto grid max-w-7xl gap-5 px-5 sm:px-8 md:grid-cols-3">
+        {cards.map((c, i) => (
+          <Reveal key={c.eyebrow} delay={i * 110}>
+            <GlassCard tone="light" tilt spotlight className="h-full p-7">
+              <GlassLayer>
+                <p className="font-body text-[0.68rem] font-600 uppercase tracking-[0.18em] text-terracotta">
+                  {c.eyebrow}
+                </p>
 
-        {/* Next show */}
-        <Reveal delay={100} className="border-espresso/12 px-2 py-8 md:border-x md:px-7">
-          <p className="font-body text-[0.7rem] font-600 uppercase tracking-[0.16em] text-terracotta">
-            Next show
-          </p>
-          {next ? (
-            <>
-              <h2 className="mt-2 font-display text-2xl text-espresso">{when.full}</h2>
-              <p className="mt-1 flex items-center gap-1.5 font-body text-sm text-espresso/70">
-                <IconPin className="h-4 w-4 text-marigold" />
-                {next.venue}
-                {next.city ? `, ${next.city}` : ''}
-              </p>
-              <Link to="/shows" className="mt-3 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso underline decoration-marigold decoration-2 underline-offset-4">
-                All shows <IconArrow className="h-4 w-4" />
-              </Link>
-            </>
-          ) : (
-            <p className="mt-3">
-              <Needed>Next show</Needed>
-            </p>
-          )}
-        </Reveal>
-
-        {/* Spotify */}
-        <Reveal delay={200} className="px-2 py-8 md:px-7">
-          <p className="font-body text-[0.7rem] font-600 uppercase tracking-[0.16em] text-terracotta">
-            Listen
-          </p>
-          <h2 className="mt-2 font-display text-2xl text-espresso">On Spotify</h2>
-          {site.socials.find((s) => s.id === 'spotify')?.url ? (
-            <a
-              href={site.socials.find((s) => s.id === 'spotify').url}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-3 inline-flex items-center gap-2 rounded-full bg-espresso px-5 py-2.5 font-body text-sm font-600 text-cream transition-colors hover:bg-espresso-light"
-            >
-              <IconSpotify className="h-4.5 w-4.5" />
-              Play now
-            </a>
-          ) : (
-            <p className="mt-3">
-              <Needed>Spotify artist link</Needed>
-            </p>
-          )}
-        </Reveal>
+                {c.title ? (
+                  <>
+                    <h2 className="mt-2 font-display text-2xl text-espresso">{c.title}</h2>
+                    {c.sub && (
+                      <p className="mt-1 flex items-center gap-1.5 font-body text-sm text-espresso/65">
+                        {c.icon && <c.icon className="h-4 w-4 text-marigold" />}
+                        {c.sub}
+                      </p>
+                    )}
+                    {c.href ? (
+                      <MagneticLink
+                        href={c.href}
+                        className="mt-4 rounded-full bg-espresso px-5 py-2.5 font-body text-sm font-600 text-cream"
+                      >
+                        {c.icon && <c.icon className="h-4 w-4" />}
+                        {c.cta}
+                      </MagneticLink>
+                    ) : (
+                      <Link
+                        to={c.to}
+                        className="mt-4 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso
+                          underline decoration-marigold decoration-2 underline-offset-4"
+                      >
+                        {c.cta} <IconArrow className="h-4 w-4" />
+                      </Link>
+                    )}
+                  </>
+                ) : (
+                  <p className="mt-3">
+                    <Needed>{c.missing}</Needed>
+                  </p>
+                )}
+              </GlassLayer>
+            </GlassCard>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
@@ -177,32 +207,38 @@ function Highlights() {
 
 function Teasers() {
   return (
-    <section className="texture-cloth mx-auto max-w-7xl px-5 py-20 sm:px-8">
+    <section className="texture-cloth relative mx-auto max-w-7xl px-5 py-20 sm:px-8">
       <Reveal className="text-center">
         <p className="font-display text-xl text-terracotta">फिरून बघा</p>
-        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-4xl">Explore Folklok</h2>
+        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-5xl">Explore Folklok</h2>
       </Reveal>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {TEASERS.map((t, i) => (
-          <Reveal key={t.to} delay={i * 80}>
-            <Link
+          <Reveal key={t.to} delay={i * 90}>
+            <GlassCard
+              tone="light"
+              tilt
+              spotlight
+              as={Link}
               to={t.to}
-              className="group flex h-full flex-col rounded-xl border border-espresso/12 bg-cream p-7 transition-all duration-300 hover:-translate-y-1 hover:border-marigold hover:shadow-xl hover:shadow-espresso/10"
+              className="group flex h-full flex-col p-7"
             >
-              <p className="font-display text-lg text-marigold">{t.mr}</p>
-              <h3 className="mt-1 font-display text-2xl text-espresso">{t.en}</h3>
-              <p className="mt-3 flex-1 font-body text-espresso/70">{t.copy}</p>
-              <span className="mt-5 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso">
-                Open
-                <IconArrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
-            </Link>
+              <GlassLayer className="flex h-full flex-col">
+                <p className="font-display text-lg text-marigold">{t.mr}</p>
+                <h3 className="mt-1 font-display text-2xl text-espresso">{t.en}</h3>
+                <p className="mt-3 flex-1 font-body text-espresso/70">{t.copy}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso">
+                  Open
+                  <IconArrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                </span>
+              </GlassLayer>
+            </GlassCard>
           </Reveal>
         ))}
 
-        <Reveal delay={400}>
-          <NeededBox aspect="h-full min-h-[13rem]">
+        <Reveal delay={450}>
+          <NeededBox aspect="h-full min-h-[14rem]">
             A performance photo or short looping clip for the homepage — the one
             image that should make someone want to see you live.
           </NeededBox>
@@ -216,9 +252,9 @@ export function Home() {
   return (
     <>
       <Hero />
+      <Ticker />
       <Highlights />
       <Teasers />
-      <Divider />
     </>
   );
 }
