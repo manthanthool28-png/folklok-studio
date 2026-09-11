@@ -68,7 +68,7 @@ export function Nav() {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <nav
         aria-label="Main"
-        className={`glass pointer-events-auto mx-auto flex items-center justify-between rounded-full pl-4 pr-2
+        className={`glass glass-nav pointer-events-auto mx-auto flex items-center justify-between rounded-full pl-4 pr-2
           transition-all duration-500 ease-[var(--ease-out-quint)] sm:pl-6
           ${scrolled ? 'max-w-5xl py-1.5' : 'max-w-6xl py-2.5'}`}
       >
@@ -132,7 +132,7 @@ export function Nav() {
       {open && (
         <div
           id="mobile-nav"
-          className="glass pointer-events-auto mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl lg:hidden"
+          className="glass glass-nav pointer-events-auto mx-auto mt-2 max-w-6xl overflow-hidden rounded-3xl lg:hidden"
         >
           <ul className="p-2">
             {NAV_LINKS.map((link, i) => (

@@ -73,9 +73,9 @@
      the top edge reads as light landing on a lip. Miss any one and it
      looks like flat opacity.                                            */
   .glass {
-    background: color-mix(in oklab, var(--color-espresso) 55%, transparent);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    background: color-mix(in oklab, var(--color-espresso) 88%, transparent);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
     border: 1px solid rgba(255, 248, 231, 0.14);
     box-shadow:
       0 8px 32px rgba(26, 18, 8, 0.28),
@@ -83,10 +83,10 @@
   }
 
   .glass-light {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
     box-shadow:
       0 8px 30px rgba(59, 31, 14, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -94,12 +94,22 @@
 
   /* Browsers without backdrop-filter get an opaque panel instead of
      unreadable text over a busy background. */
+  /* The nav has the entire page scrolling behind it, so it gets the most
+     opaque treatment of all — at anything less, headings and photos track
+     visibly through the bar and the text on it stops being readable. */
+  .glass-nav {
+    background: color-mix(in oklab, var(--color-espresso) 96%, transparent);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+  }
+
   @supports not (backdrop-filter: blur(1px)) {
-    .glass {
-      background: color-mix(in oklab, var(--color-espresso) 92%, transparent);
+    .glass,
+    .glass-nav {
+      background: color-mix(in oklab, var(--color-espresso) 99%, transparent);
     }
     .glass-light {
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.98);
     }
   }
 
@@ -149,9 +159,13 @@
     transition: transform 0.12s linear;
   }
 
-  /* Content lifted off the card face — the parallax that sells the 3D. */
+  /* Content lifted off the card face — the parallax that sells the 3D.
+     Kept shallow deliberately: perspective scales a lifted layer up by
+     900/(900 - z), so 38px made content 4.4% larger than the card holding it
+     and it spilled over the edges into the next card. 14px is visible as
+     depth without breaking the bounds. */
   .tilt-layer {
-    transform: translateZ(38px);
+    transform: translateZ(14px);
   }
 
   /* ── Texture ─────────────────────────────────────────────────────── */
