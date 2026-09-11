@@ -5,17 +5,19 @@ import { Reveal } from '../components/Reveal';
 import { Needed, NeededBox } from '../components/Needed';
 import { SwirlCurl } from '../components/Swirl';
 import { GlassCard, GlassLayer } from '../components/Glass';
+import { photoByPrefix } from '../lib/photos';
 
 function InstrumentCard({ item, index }) {
   const [playing, setPlaying] = useState(false);
+  const photo = item.image ?? photoByPrefix(`instrument-${item.slug}-`)?.src ?? null;
 
   return (
     <Reveal delay={(index % 3) * 90}>
       <GlassCard tone="light" tilt spotlight className="group flex h-full flex-col overflow-hidden">
         <div className="relative">
-          {item.image ? (
+          {photo ? (
             <img
-              src={item.image}
+              src={photo}
               alt={`${item.en} (${item.mr})`}
               loading="lazy"
               decoding="async"

@@ -3,8 +3,12 @@ import { PageHeader } from '../components/PageHeader';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededBox, NeededPanel } from '../components/Needed';
+import { photoByPrefix } from '../lib/photos';
 
 export function About() {
+  const crew = photoByPrefix('crew-') ?? photoByPrefix('group-');
+  const live = photoByPrefix('live-') ?? photoByPrefix('hero-');
+
   return (
     <>
       <PageHeader
@@ -54,10 +58,30 @@ export function About() {
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <Reveal delay={140}>
-              <NeededBox>A rehearsal photo — the room, the instruments, the mess.</NeededBox>
+              {crew ? (
+                <img
+                  src={crew.src}
+                  alt="Folklok off stage"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full rounded-3xl object-cover"
+                />
+              ) : (
+                <NeededBox>A rehearsal photo — the room, the instruments, the mess.</NeededBox>
+              )}
             </Reveal>
             <Reveal delay={220}>
-              <NeededBox>A performance photo — the group mid-song, in front of a crowd.</NeededBox>
+              {live ? (
+                <img
+                  src={live.src}
+                  alt="Folklok performing"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full rounded-3xl object-cover"
+                />
+              ) : (
+                <NeededBox>A performance photo — the group mid-song, in front of a crowd.</NeededBox>
+              )}
             </Reveal>
           </div>
 

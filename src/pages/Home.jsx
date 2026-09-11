@@ -13,6 +13,7 @@ import { Needed, NeededBox } from '../components/Needed';
 import { IconArrow, IconPin, IconSpotify } from '../components/Icons';
 import { upcomingShows, latestVideo, formatShowDate } from '../lib/content';
 import { useScrollY, useReducedMotion } from '../lib/interactions';
+import { photoByPrefix, galleryPhotos } from '../lib/photos';
 
 const TEASERS = [
   { to: '/instruments', mr: 'वाद्ये', en: 'Instruments', copy: 'The dholki, the ektara, the tuntune — the voices behind the songs.' },
@@ -25,6 +26,7 @@ const TEASERS = [
 function Hero() {
   const y = useScrollY();
   const reduced = useReducedMotion();
+  const hero = photoByPrefix('hero-') ?? photoByPrefix('live-');
 
   // Layers drift at different rates as you scroll, so the hero has depth
   // rather than sliding away as one flat sheet.
@@ -32,7 +34,30 @@ function Hero() {
 
   return (
     <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-espresso px-5 py-32">
-      <div style={shift(0.25)} className="absolute inset-0">
+      {/* A real photograph reads better than any generated background, so the
+          aurora steps back to a glow over it once one exists. */}
+      {hero && (
+        <div style={shift(0.22)} className="absolute inset-0">
+          <img
+            src={hero.src}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full scale-110 object-cover"
+          />
+          {/* Scrim: the hero type has to stay legible over whatever the photo
+              happens to be doing behind it. */}
+          <div className="absolute inset-0 bg-espresso/72" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse 75% 60% at 50% 45%, transparent, color-mix(in oklab, var(--color-ink) 82%, transparent))',
+            }}
+          />
+        </div>
+      )}
+
+      <div style={shift(0.25)} className={`absolute inset-0 ${hero ? 'opacity-45' : ''}`}>
         <Aurora />
       </div>
       <div className="texture-grain absolute inset-0" />
@@ -206,6 +231,8 @@ function Highlights() {
 }
 
 function Teasers() {
+  const gallery = galleryPhotos();
+
   return (
     <section className="texture-cloth relative mx-auto max-w-7xl px-5 py-20 sm:px-8">
       <Reveal className="text-center">
@@ -237,12 +264,62 @@ function Teasers() {
           </Reveal>
         ))}
 
-        <Reveal delay={450}>
-          <NeededBox aspect="h-full min-h-[14rem]">
-            A performance photo or short looping clip for the homepage — the one
-            image that should make someone want to see you live.
-          </NeededBox>
+        {gallery.length === 0 && (
+          <Reveal delay={450}>
+            <NeededBox aspect="h-full min-h-[14rem]">
+              A performance photo or short looping clip for the homepage — the one
+              image that should make someone want to see you live.
+            </NeededBox>
+          </Reveal>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Live photographs, full-bleed and edge to edge. Shown only when photos exist —
+ * an empty strip would be worse than no strip.
+ */
+function LiveStrip() {
+  const shots = galleryPhotos();
+  if (shots.length === 0) return null;
+
+  return (
+    <section className="relative overflow-hidden bg-espresso py-20">
+      <Aurora className="opacity-40" />
+      <div className="texture-grain absolute inset-0" />
+
+      <div className="relative">
+        <Reveal className="mx-auto mb-12 max-w-7xl px-5 text-center sm:px-8">
+          <p className="font-display text-xl text-marigold">रंगमंचावर</p>
+          <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">On stage</h2>
         </Reveal>
+
+        <div
+          className="flex gap-4 overflow-x-auto px-5 pb-4 sm:px-8"
+          style={{ scrollSnapType: 'x mandatory', scrollbarWidth: 'thin' }}
+        >
+          {shots.map((shot, i) => (
+            <Reveal
+              key={shot.name}
+              delay={Math.min(i, 6) * 70}
+              className="shrink-0"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              <figure className="group relative h-72 w-56 overflow-hidden rounded-3xl sm:h-96 sm:w-72">
+                <img
+                  src={shot.src}
+                  alt="Folklok performing live"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-cream/15" />
+              </figure>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -254,6 +331,7 @@ export function Home() {
       <Hero />
       <Ticker />
       <Highlights />
+      <LiveStrip />
       <Teasers />
     </>
   );

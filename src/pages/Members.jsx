@@ -4,6 +4,7 @@ import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededBox, NeededPanel } from '../components/Needed';
 import { GlassCard, GlassLayer } from '../components/Glass';
+import { photoByPrefix } from '../lib/photos';
 
 function MemberCard({ member, index }) {
   return (
@@ -40,6 +41,9 @@ function MemberCard({ member, index }) {
 
 export function Members() {
   const items = members.items;
+  // A group-* photo in src/assets/photos wins over the JSON path, so dropping
+  // a file in is enough — no content edit needed.
+  const group = members.groupPhoto ?? photoByPrefix('group-')?.src ?? null;
 
   return (
     <>
@@ -53,9 +57,9 @@ export function Members() {
         <div className="mx-auto max-w-7xl px-5 py-18 sm:px-8">
           {/* Group shot */}
           <Reveal>
-            {members.groupPhoto ? (
+            {group ? (
               <img
-                src={members.groupPhoto}
+                src={group}
                 alt="The Folklok collective"
                 loading="lazy"
                 decoding="async"
