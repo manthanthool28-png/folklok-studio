@@ -1,16 +1,17 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import wordmark from '../assets/folklok-wordmark.png';
+import { useLang } from '../lib/lang';
 
 export const NAV_LINKS = [
-  { to: '/', label: 'Home', mr: 'मुख्यपृष्ठ' },
-  { to: '/about', label: 'About', mr: 'आमच्याविषयी' },
-  { to: '/instruments', label: 'Instruments', mr: 'वाद्ये' },
-  { to: '/members', label: 'Members', mr: 'सदस्य' },
-  { to: '/music', label: 'Music', mr: 'संगीत' },
-  { to: '/shows', label: 'Shows', mr: 'कार्यक्रम' },
-  { to: '/blog', label: 'Blog', mr: 'मनोगत' },
-  { to: '/booking', label: 'Booking', mr: 'बुकिंग' },
+  { to: '/', key: 'home', label: 'Home', mr: 'मुख्यपृष्ठ' },
+  { to: '/about', key: 'about', label: 'About', mr: 'आमच्याविषयी' },
+  { to: '/instruments', key: 'instruments', label: 'Instruments', mr: 'वाद्ये' },
+  { to: '/members', key: 'members', label: 'Members', mr: 'सदस्य' },
+  { to: '/music', key: 'music', label: 'Music', mr: 'संगीत' },
+  { to: '/shows', key: 'shows', label: 'Shows', mr: 'कार्यक्रम' },
+  { to: '/blog', key: 'blog', label: 'Blog', mr: 'मनोगत' },
+  { to: '/booking', key: 'booking', label: 'Booking', mr: 'बुकिंग' },
 ];
 
 /**
@@ -19,7 +20,7 @@ export const NAV_LINKS = [
  * navbar feel native: the eye tracks one object moving, so the change of
  * section reads as continuous.
  */
-function useSlidingIndicator(pathname) {
+function useSlidingIndicator(pathname, lang) {
   const listRef = useRef(null);
   const [box, setBox] = useState(null);
 
@@ -39,7 +40,7 @@ function useSlidingIndicator(pathname) {
     document.fonts?.ready.then(measure).catch(() => {});
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
-  }, [pathname]);
+  }, [pathname, lang]);
 
   return { listRef, box };
 }
@@ -56,7 +57,8 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const { listRef, box } = useSlidingIndicator(pathname);
+  const { t } = useLang();
+  const { listRef, box } = useSlidingIndicator(pathname, t('nav.home'));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -159,7 +161,7 @@ export function Nav() {
                     }`
                   }
                 >
-                  <span className="text-lg">{link.label}</span>
+                  <span className="text-lg">{t(`nav.${link.key}`)}</span>
                   <span className="font-display text-sm opacity-60">{link.mr}</span>
                 </NavLink>
               </li>

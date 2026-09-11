@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-do
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
+import { LanguageRail, LanguageBar } from './components/LanguageRail';
+import { LanguageProvider } from './lib/lang';
+import { SoundProvider } from './lib/sound';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Instruments } from './pages/Instruments';
@@ -43,7 +46,9 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter basename={BASENAME}>
+    <LanguageProvider>
+      <SoundProvider>
+        <BrowserRouter basename={BASENAME}>
       <ScrollToTop />
       <a
         href="#main"
@@ -52,6 +57,8 @@ export default function App() {
         Skip to content
       </a>
       <ScrollProgress />
+      <LanguageRail />
+      <LanguageBar />
       <div className="flex min-h-screen flex-col">
         <Nav />
         <main id="main" className="flex-1">
@@ -70,6 +77,8 @@ export default function App() {
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+        </BrowserRouter>
+      </SoundProvider>
+    </LanguageProvider>
   );
 }

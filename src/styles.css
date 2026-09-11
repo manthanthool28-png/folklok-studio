@@ -350,3 +350,44 @@
 .drag-strip img {
   -webkit-user-drag: none;
 }
+
+/* ── Scattered instrument toys ────────────────────────────────────────
+   Decoration you can hit. They sit behind the content at low opacity and
+   lift toward you on hover, so they read as texture until noticed. */
+.toy {
+  transform: rotate(var(--toy-rotate, 0deg));
+  transition:
+    transform 0.5s var(--ease-spring),
+    opacity 0.4s ease;
+  cursor: pointer;
+}
+
+.toy:hover,
+.toy:focus-visible {
+  transform: rotate(calc(var(--toy-rotate, 0deg) * 0.3)) scale(1.14);
+}
+
+/* Re-keyed on every strike, so the shake replays on repeated taps. */
+.toy-struck {
+  animation: strike 0.5s var(--ease-spring);
+}
+
+@keyframes strike {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.12) rotate(-7deg); }
+  55% { transform: scale(0.97) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toy,
+  .toy-struck {
+    transition: none;
+    animation: none;
+  }
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(26px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}

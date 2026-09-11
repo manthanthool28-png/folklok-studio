@@ -1,12 +1,13 @@
 {
-  "_readme": "One entry per instrument the band actually plays. The list below is the brief's suggested set and is UNCONFIRMED — delete any you don't play, add any missing. Set image/audio to a path under /public once you have the file.",
+  "_readme": "One entry per instrument the band actually plays. The list below is the brief's suggested set and is UNCONFIRMED — the performance photos show guitar, bass, keyboard, flute, tabla, dholki and harmonium rather than ektara and tuntune, so this needs a pass. Bilingual fields take { en, mr }; leave either null and the page shows a marker for it.",
 
   "items": [
     {
       "slug": "dholki",
       "mr": "ढोलकी",
       "en": "Dholki",
-      "role": null,
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
       "image": null,
       "audio": null,
       "confirmed": false
@@ -15,16 +16,8 @@
       "slug": "tabla",
       "mr": "तबला",
       "en": "Tabla",
-      "role": null,
-      "image": null,
-      "audio": null,
-      "confirmed": false
-    },
-    {
-      "slug": "ektara",
-      "mr": "एकतारी",
-      "en": "Ektara",
-      "role": null,
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
       "image": null,
       "audio": null,
       "confirmed": false
@@ -33,7 +26,28 @@
       "slug": "harmonium",
       "mr": "पेटी",
       "en": "Harmonium",
-      "role": null,
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "bansuri",
+      "mr": "बासरी",
+      "en": "Bansuri",
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "dhol",
+      "mr": "ढोल",
+      "en": "Dhol",
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
       "image": null,
       "audio": null,
       "confirmed": false
@@ -42,7 +56,18 @@
       "slug": "manjira",
       "mr": "मंजिरी",
       "en": "Manjira",
-      "role": null,
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "ektara",
+      "mr": "एकतारी",
+      "en": "Ektara",
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
       "image": null,
       "audio": null,
       "confirmed": false
@@ -51,7 +76,8 @@
       "slug": "tuntune",
       "mr": "तुणतुणे",
       "en": "Tuntune",
-      "role": null,
+      "role": { "en": null, "mr": null },
+      "history": { "en": null, "mr": null },
       "image": null,
       "audio": null,
       "confirmed": false

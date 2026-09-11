@@ -12,7 +12,10 @@ import { Socials } from '../components/Socials';
 import { Needed, NeededBox } from '../components/Needed';
 import { IconArrow, IconPin, IconSpotify } from '../components/Icons';
 import { upcomingShows, latestVideo, formatShowDate } from '../lib/content';
-import { useScrollY, useReducedMotion, useDragScroll } from '../lib/interactions';
+import { useScrollY, useReducedMotion } from '../lib/interactions';
+import { InfiniteStrip } from '../components/InfiniteStrip';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
+import { useLang } from '../lib/lang';
 import { photoByPrefix, galleryPhotos } from '../lib/photos';
 
 const TEASERS = [
@@ -24,6 +27,7 @@ const TEASERS = [
 ];
 
 function Hero() {
+  const { t } = useLang();
   const y = useScrollY();
   const reduced = useReducedMotion();
   const hero = photoByPrefix('hero-') ?? photoByPrefix('live-');
@@ -61,6 +65,7 @@ function Hero() {
         <Aurora />
       </div>
       <div className="texture-grain absolute inset-0" />
+      <ScatteredInstruments preset="warm" tone="dark" />
 
       <div className="relative mx-auto w-full max-w-3xl" style={shift(-0.12)}>
         <Reveal>
@@ -104,7 +109,7 @@ function Hero() {
                   shadow-[0_8px_28px_rgba(245,183,0,0.34)] transition-shadow duration-300
                   hover:shadow-[0_12px_38px_rgba(245,183,0,0.5)]"
               >
-                Hear the music
+                {t('home.hearMusic')}
                 <IconArrow className="h-4.5 w-4.5" />
               </MagneticLink>
               <MagneticLink
@@ -112,7 +117,7 @@ function Hero() {
                 className="rounded-full border border-cream/30 px-7 py-3.5 font-body font-600 text-cream
                   transition-colors duration-300 hover:border-marigold hover:text-marigold"
               >
-                Book us
+                {t('home.bookUs')}
               </MagneticLink>
             </div>
 
@@ -145,6 +150,7 @@ function Ticker() {
 }
 
 function Highlights() {
+  const { t } = useLang();
   const next = upcomingShows()[0];
   const video = latestVideo();
   const when = next ? formatShowDate(next) : null;
@@ -152,27 +158,27 @@ function Highlights() {
 
   const cards = [
     {
-      eyebrow: 'Latest release',
+      eyebrow: t('home.latest'),
       title: video?.title ?? null,
       sub: video?.releaseDate ?? null,
       to: '/music',
-      cta: 'Watch it',
+      cta: t('home.watchIt'),
       missing: 'Latest release',
     },
     {
-      eyebrow: 'Next show',
+      eyebrow: t('home.nextShow'),
       title: when?.full ?? null,
       sub: next ? `${next.venue}${next.city ? `, ${next.city}` : ''}` : null,
       icon: IconPin,
       to: '/shows',
-      cta: 'All shows',
+      cta: t('home.allShows'),
       missing: 'Next show',
     },
     {
-      eyebrow: 'Listen',
-      title: spotify ? 'On Spotify' : null,
+      eyebrow: t('home.listen'),
+      title: spotify ? t('home.onSpotify') : null,
       href: spotify,
-      cta: 'Play now',
+      cta: t('home.playNow'),
       icon: IconSpotify,
       missing: 'Spotify artist link',
     },
@@ -231,32 +237,35 @@ function Highlights() {
 }
 
 function Teasers() {
+  const { t, isMr } = useLang();
   const gallery = galleryPhotos();
 
   return (
-    <section className="texture-cloth relative mx-auto max-w-7xl px-5 py-20 sm:px-8">
+    <section className="texture-cloth relative px-5 py-20 sm:px-8">
+      <ScatteredInstruments preset="warm" tone="light" />
+      <div className="relative mx-auto max-w-7xl">
       <Reveal className="text-center">
         <p className="font-display text-xl text-terracotta">फिरून बघा</p>
-        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-5xl">Explore Folklok</h2>
+        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-5xl">{t('home.exploreEn')}</h2>
       </Reveal>
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {TEASERS.map((t, i) => (
-          <Reveal key={t.to} delay={i * 90}>
+        {TEASERS.map((item, i) => (
+          <Reveal key={item.to} delay={i * 90}>
             <GlassCard
               tone="light"
               tilt
               spotlight
               as={Link}
-              to={t.to}
+              to={item.to}
               className="group flex h-full flex-col p-7"
             >
               <GlassLayer className="flex h-full flex-col">
-                <p className="font-display text-lg text-marigold">{t.mr}</p>
-                <h3 className="mt-1 font-display text-2xl text-espresso">{t.en}</h3>
-                <p className="mt-3 flex-1 font-body text-espresso/70">{t.copy}</p>
+                <p className="font-display text-lg text-marigold">{isMr ? item.en : item.mr}</p>
+                <h3 className="mt-1 font-display text-2xl text-espresso">{isMr ? item.mr : item.en}</h3>
+                <p className="mt-3 flex-1 font-body text-espresso/70">{item.copy}</p>
                 <span className="mt-6 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso">
-                  Open
+                  {t('home.open')}
                   <IconArrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                 </span>
               </GlassLayer>
@@ -272,6 +281,7 @@ function Teasers() {
             </NeededBox>
           </Reveal>
         )}
+        </div>
       </div>
     </section>
   );
@@ -283,23 +293,44 @@ function Teasers() {
  */
 function LiveStrip() {
   const shots = galleryPhotos();
-  const { ref, handlers, scrollByCard } = useDragScroll();
+  const { t } = useLang();
+
+  const { element, scrollByCard } = InfiniteStrip({
+    items: shots,
+    className: 'px-5 pb-4 sm:px-8',
+    renderItem: (shot, i, copy) => (
+      <div key={`${copy}-${shot.name}`} data-card className="shrink-0">
+        <figure className="group relative h-72 w-56 overflow-hidden rounded-3xl sm:h-96 sm:w-72">
+          <img
+            src={shot.src}
+            alt={copy === 1 ? 'Folklok performing live' : ''}
+            loading={copy === 1 && i < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+            draggable="false"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 ring-1 ring-inset ring-cream/15" />
+        </figure>
+      </div>
+    ),
+  });
+
   if (shots.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden bg-espresso py-20">
       <Aurora className="opacity-40" />
       <div className="texture-grain absolute inset-0" />
+      <ScatteredInstruments preset="sparse" tone="dark" />
 
       <div className="relative">
         <div className="mx-auto mb-10 flex max-w-7xl items-end justify-between gap-4 px-5 sm:px-8">
           <Reveal>
             <p className="font-display text-xl text-marigold">रंगमंचावर</p>
-            <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">On stage</h2>
+            <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">{t('home.onStage')}</h2>
+            <p className="mt-2 font-body text-sm text-cream/50">{t('home.scrollHint')}</p>
           </Reveal>
 
-          {/* Visible controls matter here: without them a mouse user has no
-              obvious way to move a horizontal row at all. */}
           <Reveal delay={120} className="flex shrink-0 gap-2">
             {[-1, 1].map((dir) => (
               <button
@@ -316,36 +347,7 @@ function LiveStrip() {
           </Reveal>
         </div>
 
-        <div
-          ref={ref}
-          {...handlers}
-          tabIndex={0}
-          role="region"
-          aria-label="Photos from Folklok performances — drag or use arrow keys to move"
-          className="drag-strip flex gap-4 overflow-x-auto px-5 pb-4 sm:px-8"
-        >
-          {shots.map((shot, i) => (
-            <Reveal
-              key={shot.name}
-              delay={Math.min(i, 6) * 70}
-              className="shrink-0"
-              data-card
-              style={{ scrollSnapAlign: 'start' }}
-            >
-              <figure className="group relative h-72 w-56 overflow-hidden rounded-3xl sm:h-96 sm:w-72">
-                <img
-                  src={shot.src}
-                  alt="Folklok performing live"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 ring-1 ring-inset ring-cream/15" />
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        {element}
       </div>
     </section>
   );
