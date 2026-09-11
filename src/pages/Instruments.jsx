@@ -114,7 +114,7 @@ export function Instruments() {
 
   return (
     <>
-      <PageHeader mr={t('instruments.title')} en="Instruments" lead={t('instruments.lead')} />
+      <PageHeader mr="वाद्ये" en={t('nav.instruments')} lead={t('instruments.lead')} />
 
       <section className="texture-cloth relative overflow-hidden">
         <ScatteredInstruments preset="cool" tone="light" />
