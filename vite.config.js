@@ -1,4 +1,4 @@
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -20,6 +20,9 @@ function githubPagesSpaFallback() {
     closeBundle() {
       const dist = resolve(__dirname, 'dist');
       copyFileSync(resolve(dist, 'index.html'), resolve(dist, '404.html'));
+      // Stops Pages running the output through Jekyll. Emitted here rather
+      // than kept in public/, so it lands in dist and nowhere else.
+      writeFileSync(resolve(dist, '.nojekyll'), '');
     },
   };
 }
