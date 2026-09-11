@@ -9,6 +9,7 @@ export const NAV_LINKS = [
   { to: '/members', label: 'Members', mr: 'सदस्य' },
   { to: '/music', label: 'Music', mr: 'संगीत' },
   { to: '/shows', label: 'Shows', mr: 'कार्यक्रम' },
+  { to: '/blog', label: 'Blog', mr: 'मनोगत' },
   { to: '/booking', label: 'Booking', mr: 'बुकिंग' },
 ];
 
@@ -41,6 +42,14 @@ function useSlidingIndicator(pathname) {
   }, [pathname]);
 
   return { listRef, box };
+}
+
+/**
+ * A nested route still belongs to its section: /blog/a-post should keep the
+ * pill under Blog rather than dropping it off the bar entirely.
+ */
+function isSectionActive(pathname, to) {
+  return to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(`${to}/`);
 }
 
 export function Nav() {
@@ -103,7 +112,7 @@ export function Nav() {
               key={link.to}
               to={link.to}
               end={link.to === '/'}
-              data-active={pathname === link.to}
+              data-active={isSectionActive(pathname, link.to)}
               className={({ isActive }) =>
                 `relative z-10 rounded-full px-4 py-2 font-body text-sm font-500 transition-colors duration-300 ${
                   isActive ? 'text-espresso' : 'text-cream/80 hover:text-cream'

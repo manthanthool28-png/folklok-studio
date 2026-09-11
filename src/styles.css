@@ -325,3 +325,28 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(7px); }
 }
+
+/* ── Draggable strip ──────────────────────────────────────────────────
+   Snapping is switched off mid-drag: with it on, the strip fights the
+   pointer and jumps back to the nearest card as you move. */
+.drag-strip {
+  cursor: grab;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drag-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.drag-strip[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+.drag-strip img {
+  -webkit-user-drag: none;
+}

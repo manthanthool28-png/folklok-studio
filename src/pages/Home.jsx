@@ -12,7 +12,7 @@ import { Socials } from '../components/Socials';
 import { Needed, NeededBox } from '../components/Needed';
 import { IconArrow, IconPin, IconSpotify } from '../components/Icons';
 import { upcomingShows, latestVideo, formatShowDate } from '../lib/content';
-import { useScrollY, useReducedMotion } from '../lib/interactions';
+import { useScrollY, useReducedMotion, useDragScroll } from '../lib/interactions';
 import { photoByPrefix, galleryPhotos } from '../lib/photos';
 
 const TEASERS = [
@@ -283,6 +283,7 @@ function Teasers() {
  */
 function LiveStrip() {
   const shots = galleryPhotos();
+  const { ref, handlers, scrollByCard } = useDragScroll();
   if (shots.length === 0) return null;
 
   return (
@@ -291,20 +292,44 @@ function LiveStrip() {
       <div className="texture-grain absolute inset-0" />
 
       <div className="relative">
-        <Reveal className="mx-auto mb-12 max-w-7xl px-5 text-center sm:px-8">
-          <p className="font-display text-xl text-marigold">रंगमंचावर</p>
-          <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">On stage</h2>
-        </Reveal>
+        <div className="mx-auto mb-10 flex max-w-7xl items-end justify-between gap-4 px-5 sm:px-8">
+          <Reveal>
+            <p className="font-display text-xl text-marigold">रंगमंचावर</p>
+            <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">On stage</h2>
+          </Reveal>
+
+          {/* Visible controls matter here: without them a mouse user has no
+              obvious way to move a horizontal row at all. */}
+          <Reveal delay={120} className="flex shrink-0 gap-2">
+            {[-1, 1].map((dir) => (
+              <button
+                key={dir}
+                type="button"
+                onClick={() => scrollByCard(dir)}
+                aria-label={dir === -1 ? 'Previous photos' : 'More photos'}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/25
+                  text-cream/80 transition-colors duration-300 hover:border-marigold hover:bg-marigold hover:text-espresso"
+              >
+                <IconArrow className={`h-4.5 w-4.5 ${dir === -1 ? 'rotate-180' : ''}`} />
+              </button>
+            ))}
+          </Reveal>
+        </div>
 
         <div
-          className="flex gap-4 overflow-x-auto px-5 pb-4 sm:px-8"
-          style={{ scrollSnapType: 'x mandatory', scrollbarWidth: 'thin' }}
+          ref={ref}
+          {...handlers}
+          tabIndex={0}
+          role="region"
+          aria-label="Photos from Folklok performances — drag or use arrow keys to move"
+          className="drag-strip flex gap-4 overflow-x-auto px-5 pb-4 sm:px-8"
         >
           {shots.map((shot, i) => (
             <Reveal
               key={shot.name}
               delay={Math.min(i, 6) * 70}
               className="shrink-0"
+              data-card
               style={{ scrollSnapAlign: 'start' }}
             >
               <figure className="group relative h-72 w-56 overflow-hidden rounded-3xl sm:h-96 sm:w-72">
@@ -313,6 +338,7 @@ function LiveStrip() {
                   alt="Folklok performing live"
                   loading="lazy"
                   decoding="async"
+                  draggable="false"
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 ring-1 ring-inset ring-cream/15" />

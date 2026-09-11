@@ -10,6 +10,8 @@ import { Members } from './pages/Members';
 import { Music } from './pages/Music';
 import { Shows } from './pages/Shows';
 import { Booking } from './pages/Booking';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 
 // Router prefix for the GitHub Pages project site. Vite injects its `base` as
 // BASE_URL, so this stays in step with vite.config.js on its own — including
@@ -60,6 +62,8 @@ export default function App() {
             <Route path="/members" element={<Members />} />
             <Route path="/music" element={<Music />} />
             <Route path="/shows" element={<Shows />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/booking" element={<Booking />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -156,3 +156,70 @@ export function useScrollY() {
 
   return y;
 }
+
+/**
+ * Click-and-drag scrolling for a horizontal strip, plus arrow-key and button
+ * control.
+ *
+ * A horizontally-scrolling row is easy on a trackpad and awkward with a mouse —
+ * there's no wheel axis for it, so without this a desktop visitor often can't
+ * tell the row moves at all. Touch already works natively, so the pointer
+ * handlers deliberately ignore touch and let the browser do it.
+ */
+export function useDragScroll() {
+  const ref = useRef(null);
+  const state = useRef({ down: false, startX: 0, startScroll: 0, moved: 0 });
+
+  const onPointerDown = useCallback((e) => {
+    // Leave touch and pen to native momentum scrolling — hijacking them makes
+    // the strip feel worse on a phone, not better.
+    if (e.pointerType !== 'mouse') return;
+    const node = ref.current;
+    if (!node) return;
+    state.current = {
+      down: true,
+      startX: e.clientX,
+      startScroll: node.scrollLeft,
+      moved: 0,
+    };
+    node.setPointerCapture?.(e.pointerId);
+    node.dataset.dragging = 'true';
+  }, []);
+
+  const onPointerMove = useCallback((e) => {
+    const node = ref.current;
+    if (!node || !state.current.down) return;
+    const dx = e.clientX - state.current.startX;
+    state.current.moved = Math.abs(dx);
+    node.scrollLeft = state.current.startScroll - dx;
+  }, []);
+
+  const endDrag = useCallback((e) => {
+    const node = ref.current;
+    if (!node) return;
+    state.current.down = false;
+    node.dataset.dragging = 'false';
+    if (e?.pointerId != null) node.releasePointerCapture?.(e.pointerId);
+  }, []);
+
+  /** Scroll by roughly one card, in either direction. */
+  const scrollByCard = useCallback((direction) => {
+    const node = ref.current;
+    if (!node) return;
+    const card = node.querySelector('[data-card]');
+    const step = card ? card.getBoundingClientRect().width + 16 : node.clientWidth * 0.8;
+    node.scrollBy({ left: step * direction, behavior: 'smooth' });
+  }, []);
+
+  return {
+    ref,
+    handlers: {
+      onPointerDown,
+      onPointerMove,
+      onPointerUp: endDrag,
+      onPointerCancel: endDrag,
+      onPointerLeave: endDrag,
+    },
+    scrollByCard,
+  };
+}

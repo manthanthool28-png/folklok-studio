@@ -1,0 +1,29 @@
+{
+  "_readme": "The founder's blog. Posts render in the order listed here — newest first. Body is an array of blocks so no Markdown parser ships to the browser: use type 'p' for a paragraph, 'h2' for a subheading, and 'quote' for a pulled-out line. Marathi and English can be mixed freely; both fonts carry Devanagari.",
+
+  "author": {
+    "name": null,
+    "_name_todo": "The founder's name, as it should be credited on every post.",
+    "role": "Founder, Folklok",
+    "photo": null,
+    "_photo_todo": "A portrait. Or drop a file named author-1.jpg into src/assets/photos and it is picked up automatically.",
+    "bio": null,
+    "_bio_todo": "Two or three lines — who they are and why they started Folklok."
+  },
+
+  "_post_shape": {
+    "slug": "url-safe-id-used-in-the-address-bar",
+    "title": "English title",
+    "titleMr": "मराठी शीर्षक (optional)",
+    "date": "YYYY-MM-DD",
+    "excerpt": "One or two lines shown on the listing page.",
+    "photo": "optional — a filename prefix from src/assets/photos, e.g. 'live-07'",
+    "body": [
+      { "type": "p", "text": "A paragraph." },
+      { "type": "h2", "text": "A subheading." },
+      { "type": "quote", "text": "A line worth pulling out." }
+    ]
+  },
+
+  "posts": []
+}
