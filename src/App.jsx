@@ -10,6 +10,11 @@ import { Music } from './pages/Music';
 import { Shows } from './pages/Shows';
 import { Booking } from './pages/Booking';
 
+// Router prefix for the GitHub Pages project site. Vite injects its `base` as
+// BASE_URL, so this stays in step with vite.config.js on its own — including
+// in dev, where BASE_URL is '/'.
+const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -35,7 +40,7 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={BASENAME}>
       <ScrollToTop />
       <a
         href="#main"
