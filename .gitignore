@@ -4,3 +4,6 @@ dist
 .env
 .env.local
 *.log
+
+# Photos set aside during review — kept locally, never published
+src/assets/photos/_unused/

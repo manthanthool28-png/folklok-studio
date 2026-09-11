@@ -30,15 +30,22 @@ export function photoByPrefix(prefix) {
 }
 
 /**
- * Photos for the homepage strip: anything tagged `live-`, and if there aren't
- * enough of those, whatever else is in the folder — so a handful of unnamed
- * files still produces a gallery rather than an empty row.
+ * Photos for the homepage strip: anything tagged `live-`, falling back to
+ * whatever else is in the folder so a handful of unnamed files still produces
+ * a gallery rather than an empty row.
+ *
+ * Capped deliberately. The strip scrolls horizontally, so an uncapped list
+ * means someone who drags to the end pulls every photo in the project — with
+ * 47 of them that's tens of megabytes on a phone. The rest stay available to
+ * other pages through photosByPrefix.
  */
-export function galleryPhotos(min = 4) {
+export function galleryPhotos(limit = 12) {
   const live = photosByPrefix('live-');
-  if (live.length >= min) return live;
-  const rest = photos.filter((p) => !live.includes(p) && !p.name.startsWith('hero-'));
-  return [...live, ...rest];
+  const pool =
+    live.length >= 4
+      ? live
+      : [...live, ...photos.filter((p) => !live.includes(p) && !p.name.startsWith('hero-'))];
+  return pool.slice(0, limit);
 }
 
 export const hasPhotos = photos.length > 0;
