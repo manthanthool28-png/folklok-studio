@@ -1,0 +1,31 @@
+{
+  "_readme": "Single source of truth for site-wide content. Anything still unknown is null on purpose — the UI renders a visible NEEDED marker for nulls rather than inventing a plausible value. Fill these in and the markers disappear.",
+
+  "name": "Folklok",
+  "tagline": {
+    "mr": "लोकसंगीताचं दान, माय मराठीचं गुणगान",
+    "en": "The gift of folk music, an ode to mother Marathi"
+  },
+  "intro": null,
+  "_intro_todo": "One or two lines describing Folklok for the homepage hero. Who you are, what you play.",
+
+  "foundedYear": null,
+  "baseCity": null,
+
+  "contact": {
+    "bookingEmail": null,
+    "bookingPhone": null
+  },
+
+  "socials": [
+    { "id": "instagram", "label": "Instagram", "url": null },
+    { "id": "youtube", "label": "YouTube", "url": null },
+    { "id": "spotify", "label": "Spotify", "url": null },
+    { "id": "facebook", "label": "Facebook", "url": null }
+  ],
+
+  "spotify": {
+    "artistId": null,
+    "_artistId_todo": "The ID from your artist URL: open.spotify.com/artist/<THIS PART>. Enables the embedded player on the Music page."
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "_readme": "One entry per instrument the band actually plays. The list below is the brief's suggested set and is UNCONFIRMED — delete any you don't play, add any missing. Set image/audio to a path under /public once you have the file.",
+
+  "items": [
+    {
+      "slug": "dholki",
+      "mr": "ढोलकी",
+      "en": "Dholki",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "tabla",
+      "mr": "तबला",
+      "en": "Tabla",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "ektara",
+      "mr": "एकतारी",
+      "en": "Ektara",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "harmonium",
+      "mr": "पेटी",
+      "en": "Harmonium",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "manjira",
+      "mr": "मंजिरी",
+      "en": "Manjira",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    },
+    {
+      "slug": "tuntune",
+      "mr": "तुणतुणे",
+      "en": "Tuntune",
+      "role": null,
+      "image": null,
+      "audio": null,
+      "confirmed": false
+    }
+  ]
+}

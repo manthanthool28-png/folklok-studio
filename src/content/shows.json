@@ -1,0 +1,5 @@
+{
+  "_readme": "date must be ISO (YYYY-MM-DD) — upcoming vs past is computed from today's date, so a show moves to the archive on its own. ticketUrl is optional.",
+
+  "shows": []
+}

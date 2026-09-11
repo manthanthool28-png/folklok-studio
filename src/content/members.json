@@ -1,0 +1,9 @@
+{
+  "_readme": "One entry per band member. No members are listed yet — add them here and the Members page fills itself in. groupPhoto is a path under /public.",
+
+  "groupPhoto": null,
+  "howWeMet": null,
+  "_howWeMet_todo": "A line or two on how the collective came together.",
+
+  "items": []
+}

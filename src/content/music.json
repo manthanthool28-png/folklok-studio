@@ -1,0 +1,7 @@
+{
+  "_readme": "videos: YouTube IDs only (the part after v=), newest first. releases: anything with a Spotify album/track URI, or plain discography rows. Empty arrays render an honest 'nothing here yet' state.",
+
+  "videos": [],
+  "releases": [],
+  "discography": []
+}

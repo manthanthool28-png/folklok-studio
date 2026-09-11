@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* ── Folklok brand tokens ──────────────────────────────────────────────
+   Palette and type per the brand brief. Espresso grounds the page, cream
+   is the field, marigold is the single loud voice. Terracotta / brass /
+   deep red are festival-textile accents, used sparingly.               */
+@theme {
+  --color-cream: #fff8e7;
+  --color-cream-deep: #faf3e0;
+  --color-espresso: #3b1f0e;
+  --color-espresso-light: #4a2a12;
+  --color-marigold: #f5b700;
+  --color-marigold-light: #fbc02d;
+  --color-ink: #1a1208;
+
+  --color-terracotta: #c25a3c;
+  --color-brass: #b08d3f;
+  --color-deepred: #8c2f26;
+
+  /* Eczar and Mukta both carry Devanagari and Latin, so Marathi and
+     English set as one family rather than two mismatched systems. */
+  --font-display: "Eczar", Georgia, serif;
+  --font-body: "Mukta", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-marigold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-marigold);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* Woven cream ground — a faint warp/weft, not a visible pattern. */
+  .texture-cloth {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(59, 31, 14, 0.022) 0 1px,
+        transparent 1px 3px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(59, 31, 14, 0.022) 0 1px,
+        transparent 1px 3px
+      );
+  }
+
+  /* Woodgrain for espresso panels — drum-shell striation. */
+  .texture-grain {
+    background-image: repeating-linear-gradient(
+      92deg,
+      rgba(255, 248, 231, 0.028) 0 2px,
+      transparent 2px 7px
+    );
+  }
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────────────
+   Driven by IntersectionObserver in <Reveal>. Kept in CSS so the work
+   happens on the compositor and no animation library ships to phones. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The swirl draws itself in as it enters — the recurring transition motif. */
+.swirl-path {
+  stroke-dasharray: var(--swirl-len, 400);
+  stroke-dashoffset: var(--swirl-len, 400);
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal[data-visible="true"] .swirl-path {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .swirl-path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
