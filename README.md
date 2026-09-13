@@ -23,7 +23,7 @@ Then open http://localhost:3000. `npm run build` produces `dist/`.
 React 18 + Vite + Tailwind v4 + React Router. Four runtime packages, 78
 installed in total. There's no component library, no animation library and no
 icon package — the site needs eight icons and one scroll-reveal effect, and
-both are a few dozen lines here. The production bundle is **65 KB gzipped**,
+both are a few dozen lines here. The production bundle is **92 KB gzipped**,
 which matters because most visitors will arrive from an Instagram link on
 mobile data.
 
@@ -42,7 +42,8 @@ gallery of videos doesn't pull a megabyte of player JavaScript on load.
 | File | Holds |
 | --- | --- |
 | `site.json` | Name, tagline, intro line, founding year, base city, booking email/phone, social URLs, Spotify artist ID |
-| `instruments.json` | One entry per instrument — Devanagari + English name, its role, photo, audio clip |
+| `instruments.json` | The folk instruments of Maharashtra — 20 of them, each with a researched Marathi + English description and its source. `played` marks which ones Folklok uses |
+| `beats.json` | The beat machine's cycles (bhajani, lavani, keherwa, dadra, lezim, dhol–tasha, gondhal) — tempo and a step grid per instrument |
 | `members.json` | One entry per member, plus the group shot and the "how we met" line |
 | `music.json` | YouTube video IDs, Spotify releases, discography rows |
 | `shows.json` | Every show, past and future, in one list |
@@ -84,9 +85,12 @@ Fill the value in `src/content/`, and the marker disappears on its own.
 - [ ] Spotify artist ID, for the embedded players
 - [ ] The founding story, the artistic statement, and any press
 - [ ] Band members — name, role, bio, headshot, plus a group shot
-- [ ] **Confirm the instrument list.** The six currently listed came from the
-      brief's *suggested* set, not from the band; each is flagged `Unconfirmed`
-      on the page until you set `confirmed: true`
+- [ ] **Mark which instruments Folklok plays.** The instrument descriptions are
+      researched and sourced, not placeholders — but which ones are *yours* is
+      unknown. Set `"played": true` on those in `instruments.json`
+- [ ] Have a player correct the beat grids in `beats.json` — the matra counts
+      are documented, the patterns are simplified skeletons
+- [ ] Have a native speaker read the Marathi in `instruments.json` and `beats.json`
 - [ ] Photos: rehearsal, performance, per-instrument, per-show
 - [ ] Audio clips per instrument
 - [ ] The "what we offer" blurb for organisers (set length, group size, rider)
@@ -116,6 +120,5 @@ nav mark, so it's worth digging out. There's no favicon set yet.
 
 ## Not built
 
-- **Audio easter egg** — needs an instrument riff to play; no audio yet.
 - **Press kit download** — needs the PDF.
 - **Dark mode** — deliberately skipped. The cream ground is core to the brand.

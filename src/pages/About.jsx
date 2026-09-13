@@ -1,5 +1,6 @@
 import site from '../content/site.json';
 import { PageHeader } from '../components/PageHeader';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededBox, NeededPanel } from '../components/Needed';
@@ -17,7 +18,8 @@ export function About() {
         lead="Where the songs come from, and why we keep singing them."
       />
 
-      <section className="texture-cloth">
+      <section className="texture-cloth relative overflow-hidden">
+        <ScatteredInstruments preset="warm" tone="light" />
         <div className="mx-auto max-w-5xl px-5 py-18 sm:px-8">
           {/* Facts strip */}
           <Reveal className="grid gap-5 sm:grid-cols-2">

@@ -1,4 +1,5 @@
 import { PageHeader } from '../components/PageHeader';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { NeededPanel } from '../components/Needed';
@@ -89,7 +90,8 @@ export function Shows() {
         lead="Where to find us next — and every stage we have stood on."
       />
 
-      <section className="texture-cloth">
+      <section className="texture-cloth relative overflow-hidden">
+        <ScatteredInstruments preset="march" tone="light" />
         <div className="mx-auto max-w-4xl px-5 py-18 sm:px-8">
           <Reveal>
             <p className="font-display text-xl text-terracotta">येणारे कार्यक्रम</p>

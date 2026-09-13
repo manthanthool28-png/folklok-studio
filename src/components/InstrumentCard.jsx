@@ -1,26 +1,72 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { artFor } from './InstrumentArt';
 import { GlassCard } from './Glass';
-import { Needed } from './Needed';
 import { useSound } from '../lib/sound';
-import { useLang } from '../lib/lang';
 import { photoByPrefix } from '../lib/photos';
 
+const STORAGE_KEY = 'folklok:cardLang';
+
+const MODES = [
+  { code: 'mr', label: 'मराठी' },
+  { code: 'en', label: 'English' },
+  { code: 'both', label: 'दोन्ही · Both' },
+];
+
 /**
- * The play card. Both languages sit side by side here rather than switching
- * with the rail — on a page about Marathi folk instruments, seeing the
- * Devanagari and the English together is the point, and someone reading one
- * usually wants the other to hand.
+ * The card's own language switch, and the only one on the site — the rest of
+ * the interface is in English. Read synchronously on the first render and
+ * written only on an explicit choice: persisting from an effect races the
+ * initial value and silently resets the preference.
+ */
+function useCardLang() {
+  const [mode, setMode] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return MODES.some((m) => m.code === saved) ? saved : 'both';
+    } catch {
+      return 'both';
+    }
+  });
+
+  const choose = useCallback((next) => {
+    setMode(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* preference just won't persist — the card still works */
+    }
+  }, []);
+
+  return [mode, choose];
+}
+
+function Column({ code, item }) {
+  const heading = code === 'mr' ? 'मराठी' : 'English';
+  return (
+    <div lang={code}>
+      <p className="font-body text-[0.68rem] font-600 uppercase tracking-[0.18em] text-terracotta">
+        {heading}
+      </p>
+      <p className="mt-2.5 font-body text-espresso/85">{item.role[code]}</p>
+      <p className="mt-3 font-body text-sm leading-relaxed text-espresso/65">{item.history[code]}</p>
+    </div>
+  );
+}
+
+/**
+ * The play card. One instrument, its sound, and what it actually is — in
+ * Marathi and English, with the switch at the bottom of the card.
  */
 export function InstrumentCard({ item, onClose }) {
   const Art = artFor(item.slug);
   const { play } = useSound();
-  const { t } = useLang();
+  const [mode, setMode] = useCardLang();
   const [struck, setStruck] = useState(0);
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
 
   const photo = item.image ?? photoByPrefix(`instrument-${item.slug}-`)?.src ?? null;
+  const columns = mode === 'both' ? ['mr', 'en'] : [mode];
 
   // Focus moves into the dialog on open and Escape closes it — a modal you
   // can't leave by keyboard is a trap.
@@ -78,7 +124,7 @@ export function InstrumentCard({ item, onClose }) {
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label={t('instruments.close')}
+            aria-label="Close"
             className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full
               text-espresso/60 transition-colors hover:bg-espresso/8 hover:text-espresso"
           >
@@ -91,7 +137,7 @@ export function InstrumentCard({ item, onClose }) {
           <button
             type="button"
             onClick={strike}
-            aria-label={t('instruments.tapToPlay')}
+            aria-label={`Play the ${item.en}`}
             className="mx-auto block w-44 sm:w-56"
           >
             {photo ? (
@@ -107,7 +153,7 @@ export function InstrumentCard({ item, onClose }) {
           </button>
 
           <div className="mt-6 text-center">
-            <p className="font-display text-4xl text-marigold">{item.mr}</p>
+            <p className="font-display text-4xl text-marigold" lang="mr">{item.mr}</p>
             <h2 className="mt-1 font-display text-2xl text-espresso">{item.en}</h2>
           </div>
 
@@ -122,47 +168,54 @@ export function InstrumentCard({ item, onClose }) {
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-marigold" aria-hidden="true">
                 <path d="M8 5v14l11-7z" />
               </svg>
-              {struck ? t('instruments.playAgain') : t('instruments.tapToPlay')}
+              {struck ? 'Play again' : 'Tap to play'}
             </button>
           </div>
 
-          {/* Both languages, always — that is the point of this card. */}
-          <div className="mt-8 grid gap-6 border-t border-espresso/12 pt-7 sm:grid-cols-2">
-            {[
-              { code: 'mr', heading: 'मराठी', body: item.role?.mr, extra: item.history?.mr },
-              { code: 'en', heading: 'English', body: item.role?.en, extra: item.history?.en },
-            ].map((col) => (
-              <div key={col.code} lang={col.code}>
-                <p className="font-body text-[0.68rem] font-600 uppercase tracking-[0.18em] text-terracotta">
-                  {col.heading}
-                </p>
-                <div className="mt-2 font-body text-espresso/80">
-                  {col.body ?? (
-                    <Needed>{col.code === 'mr' ? 'मराठी माहिती' : 'English description'}</Needed>
-                  )}
-                </div>
-                {col.extra && <p className="mt-3 font-body text-espresso/70">{col.extra}</p>}
-              </div>
+          <div
+            className={`mt-8 grid gap-7 border-t border-espresso/12 pt-7 ${
+              columns.length > 1 ? 'sm:grid-cols-2' : ''
+            }`}
+          >
+            {columns.map((code) => (
+              <Column key={code} code={code} item={item} />
             ))}
           </div>
 
-          {!item.confirmed && (
-            <p
-              data-needed
-              className="mt-7 rounded-2xl border border-dashed border-terracotta/45 bg-terracotta/7 p-4
-                text-center font-body text-sm text-espresso/70"
-            >
-              Not yet confirmed as an instrument Folklok plays — set{' '}
-              <code className="rounded bg-espresso/8 px-1.5 py-0.5">confirmed: true</code> in
-              instruments.json.
-            </p>
-          )}
+          {/* The language switch lives with the text it changes. */}
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
+            <span className="mr-1 font-body text-[0.66rem] font-600 uppercase tracking-[0.16em] text-espresso/40">
+              भाषा / Language
+            </span>
+            {MODES.map((m) => (
+              <button
+                key={m.code}
+                type="button"
+                onClick={() => setMode(m.code)}
+                aria-pressed={mode === m.code}
+                className={`rounded-full px-3.5 py-1.5 font-body text-sm transition-colors ${
+                  mode === m.code
+                    ? 'bg-espresso font-600 text-cream'
+                    : 'border border-espresso/20 text-espresso/70 hover:border-marigold hover:bg-marigold/20'
+                }`}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
 
-          {!item.audio && (
-            <p className="mt-4 text-center font-body text-xs text-espresso/45">
-              Sound is synthesised — add an <code>audio</code> path for a real recording.
-            </p>
-          )}
+          <p className="mt-7 border-t border-espresso/10 pt-5 text-center font-body text-xs text-espresso/45">
+            {item.audio ? 'Recording' : 'Sound is synthesised'} · Description from{' '}
+            <a
+              href={item.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-espresso/25 underline-offset-2 hover:text-espresso"
+            >
+              this source
+            </a>
+            {item.played == null && ' · Not yet confirmed as one Folklok plays'}
+          </p>
         </div>
       </GlassCard>
     </div>

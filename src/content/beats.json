@@ -1,0 +1,115 @@
+{
+  "_readme": "Rhythms for the beat machine. The taal names and their matra counts are real and documented — bhajani and keherwa are eight matra in two halves of four, dadra is six in two of three. The GRIDS are not transcriptions: they are simplified skeletons that sound right in a browser, and a player who actually sits behind a dholki should correct them. Each cell is 0 (silent), 1 (stroke) or 2 (accent / bass stroke). One row of 16 cells is eight matra, two cells per matra.",
+
+  "beats": [
+    {
+      "slug": "bhajani",
+      "mr": "भजनी ठेका",
+      "en": "Bhajani",
+      "matra": 8,
+      "bpm": 96,
+      "note": {
+        "en": "Eight matras in two halves of four — the cycle a warkari dindi walks to, all the way to Pandharpur.",
+        "mr": "चार-चारच्या दोन खंडांत आठ मात्रा — वारकऱ्यांची दिंडी पंढरपूरपर्यंत याच ठेक्यावर चालते."
+      },
+      "lanes": {
+        "mridang": [2,0,1,0, 1,0,1,1, 2,0,1,0, 1,0,1,0],
+        "taal":    [2,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0],
+        "chiplya": [1,0,1,0, 1,0,1,0, 1,0,1,0, 1,0,1,0]
+      }
+    },
+    {
+      "slug": "lavani",
+      "mr": "लावणी",
+      "en": "Lavani",
+      "matra": 8,
+      "bpm": 132,
+      "note": {
+        "en": "Dholki out front and a halgi answering it. Fast, and it leans on the last two matras.",
+        "mr": "पुढं ढोलकी, मागून हलगीचं उत्तर. वेगवान — आणि शेवटच्या दोन मात्रांवर तिचा जोर."
+      },
+      "lanes": {
+        "dholki": [2,0,1,1, 2,0,1,0, 2,0,1,1, 1,1,1,0],
+        "halgi":  [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,1,0],
+        "taal":   [2,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0]
+      }
+    },
+    {
+      "slug": "keherwa",
+      "mr": "केरवा",
+      "en": "Keherwa",
+      "matra": 8,
+      "bpm": 110,
+      "note": {
+        "en": "The eight-matra cycle most folk songs sit on. Bhajani is a gentler cousin of it.",
+        "mr": "बहुतेक लोकगीतं याच आठ मात्रांवर बसतात. भजनी ठेका हा याचाच मवाळ भाऊ."
+      },
+      "lanes": {
+        "dholki": [2,0,1,0, 1,0,1,0, 1,0,1,0, 2,0,1,0],
+        "taal":   [2,0,0,0, 0,0,0,0, 1,0,0,0, 0,0,0,0]
+      }
+    },
+    {
+      "slug": "dadra",
+      "mr": "दादरा",
+      "en": "Dadra",
+      "matra": 6,
+      "bpm": 104,
+      "note": {
+        "en": "Six matras, three and three — the swing you hear in a lullaby or a light bhavgeet.",
+        "mr": "तीन-तीनच्या सहा मात्रा — अंगाईत किंवा हलक्याफुलक्या भावगीतात जाणवणारा झोका."
+      },
+      "lanes": {
+        "dholki": [2,0,1,0,1,0, 1,0,1,0,1,0],
+        "taal":   [2,0,0,0,0,0, 1,0,0,0,0,0]
+      }
+    },
+    {
+      "slug": "lezim",
+      "mr": "लेझीम",
+      "en": "Lezim",
+      "matra": 8,
+      "bpm": 120,
+      "note": {
+        "en": "A drill before it is a rhythm. Twenty pairs of discs land together or it is nothing.",
+        "mr": "हा ठेका होण्याआधी व्यायाम आहे. वीस जोड्या चकत्या एकाच वेळी वाजल्या तरच तो लेझीम."
+      },
+      "lanes": {
+        "lezim":  [2,0,1,0, 2,0,1,0, 2,0,1,0, 2,0,1,1],
+        "dholki": [2,0,0,1, 1,0,0,1, 2,0,0,1, 1,0,1,0]
+      }
+    },
+    {
+      "slug": "dhol-tasha",
+      "mr": "ढोल-ताशा",
+      "en": "Dhol–Tasha",
+      "matra": 8,
+      "bpm": 126,
+      "note": {
+        "en": "Procession tempo. The tasha fills every gap the dhol leaves.",
+        "mr": "मिरवणुकीचा वेग. ढोल जी जागा सोडतो ती ताशा भरून काढतो."
+      },
+      "lanes": {
+        "dhol":  [2,0,0,0, 1,0,1,0, 2,0,0,0, 1,0,1,1],
+        "tasha": [1,1,1,0, 1,1,1,0, 1,1,1,0, 1,1,1,1],
+        "taal":  [2,0,0,0, 0,0,0,0, 2,0,0,0, 0,0,0,0]
+      }
+    },
+    {
+      "slug": "gondhal",
+      "mr": "गोंधळ",
+      "en": "Gondhal",
+      "matra": 8,
+      "bpm": 100,
+      "note": {
+        "en": "Sambal and a one-string drone. This one is sung to a goddess, through the night.",
+        "mr": "संबळ आणि एकतारी सूर. हा ठेका देवीसमोर, रात्रभर."
+      },
+      "lanes": {
+        "sambal":  [2,0,1,0, 2,1,1,0, 2,0,1,0, 1,1,1,0],
+        "tuntune": [1,0,0,0, 1,0,0,0, 1,0,0,0, 1,0,0,0],
+        "taal":    [1,0,1,0, 1,0,1,0, 1,0,1,0, 1,0,1,0]
+      }
+    }
+  ]
+}

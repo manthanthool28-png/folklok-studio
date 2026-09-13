@@ -15,11 +15,10 @@ import { upcomingShows, latestVideo, formatShowDate } from '../lib/content';
 import { useScrollY, useReducedMotion } from '../lib/interactions';
 import { InfiniteStrip } from '../components/InfiniteStrip';
 import { ScatteredInstruments } from '../components/ScatteredInstruments';
-import { useLang } from '../lib/lang';
 import { photoByPrefix, galleryPhotos } from '../lib/photos';
 
 const TEASERS = [
-  { to: '/instruments', mr: 'वाद्ये', en: 'Instruments', copy: 'The dholki, the ektara, the tuntune — the voices behind the songs.' },
+  { to: '/instruments', mr: 'वाद्ये', en: 'Instruments', copy: 'Twenty of them — dholki, sambal, tarpa, tutari. Play each one, and a beat you can rebuild.' },
   { to: '/members', mr: 'सदस्य', en: 'Members', copy: 'The people who make up the collective.' },
   { to: '/music', mr: 'संगीत', en: 'Music & Releases', copy: 'Videos, singles and everything on Spotify.' },
   { to: '/shows', mr: 'कार्यक्रम', en: 'Shows', copy: 'Where to find us next, and everywhere we have played.' },
@@ -27,7 +26,6 @@ const TEASERS = [
 ];
 
 function Hero() {
-  const { t } = useLang();
   const y = useScrollY();
   const reduced = useReducedMotion();
   const hero = photoByPrefix('hero-') ?? photoByPrefix('live-');
@@ -109,7 +107,7 @@ function Hero() {
                   shadow-[0_8px_28px_rgba(245,183,0,0.34)] transition-shadow duration-300
                   hover:shadow-[0_12px_38px_rgba(245,183,0,0.5)]"
               >
-                {t('home.hearMusic')}
+                Hear the music
                 <IconArrow className="h-4.5 w-4.5" />
               </MagneticLink>
               <MagneticLink
@@ -117,7 +115,7 @@ function Hero() {
                 className="rounded-full border border-cream/30 px-7 py-3.5 font-body font-600 text-cream
                   transition-colors duration-300 hover:border-marigold hover:text-marigold"
               >
-                {t('home.bookUs')}
+                Book us
               </MagneticLink>
             </div>
 
@@ -150,7 +148,6 @@ function Ticker() {
 }
 
 function Highlights() {
-  const { t } = useLang();
   const next = upcomingShows()[0];
   const video = latestVideo();
   const when = next ? formatShowDate(next) : null;
@@ -158,27 +155,27 @@ function Highlights() {
 
   const cards = [
     {
-      eyebrow: t('home.latest'),
+      eyebrow: 'Latest release',
       title: video?.title ?? null,
       sub: video?.releaseDate ?? null,
       to: '/music',
-      cta: t('home.watchIt'),
+      cta: 'Watch it',
       missing: 'Latest release',
     },
     {
-      eyebrow: t('home.nextShow'),
+      eyebrow: 'Next show',
       title: when?.full ?? null,
       sub: next ? `${next.venue}${next.city ? `, ${next.city}` : ''}` : null,
       icon: IconPin,
       to: '/shows',
-      cta: t('home.allShows'),
+      cta: 'All shows',
       missing: 'Next show',
     },
     {
-      eyebrow: t('home.listen'),
-      title: spotify ? t('home.onSpotify') : null,
+      eyebrow: 'Listen',
+      title: spotify ? 'On Spotify' : null,
       href: spotify,
-      cta: t('home.playNow'),
+      cta: 'Play now',
       icon: IconSpotify,
       missing: 'Spotify artist link',
     },
@@ -237,7 +234,6 @@ function Highlights() {
 }
 
 function Teasers() {
-  const { t, isMr } = useLang();
   const gallery = galleryPhotos();
 
   return (
@@ -246,7 +242,7 @@ function Teasers() {
       <div className="relative mx-auto max-w-7xl">
       <Reveal className="text-center">
         <p className="font-display text-xl text-terracotta">फिरून बघा</p>
-        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-5xl">{t('home.exploreEn')}</h2>
+        <h2 className="mt-1 font-display text-3xl text-espresso sm:text-5xl">Explore Folklok</h2>
       </Reveal>
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -261,11 +257,11 @@ function Teasers() {
               className="group flex h-full flex-col p-7"
             >
               <GlassLayer className="flex h-full flex-col">
-                <p className="font-display text-lg text-marigold">{isMr ? item.en : item.mr}</p>
-                <h3 className="mt-1 font-display text-2xl text-espresso">{isMr ? item.mr : item.en}</h3>
+                <p className="font-display text-lg text-marigold">{item.mr}</p>
+                <h3 className="mt-1 font-display text-2xl text-espresso">{item.en}</h3>
                 <p className="mt-3 flex-1 font-body text-espresso/70">{item.copy}</p>
                 <span className="mt-6 inline-flex items-center gap-1.5 font-body text-sm font-600 text-espresso">
-                  {t('home.open')}
+                  Open
                   <IconArrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                 </span>
               </GlassLayer>
@@ -293,7 +289,6 @@ function Teasers() {
  */
 function LiveStrip() {
   const shots = galleryPhotos();
-  const { t } = useLang();
 
   const { element, scrollByCard } = InfiniteStrip({
     items: shots,
@@ -327,8 +322,8 @@ function LiveStrip() {
         <div className="mx-auto mb-10 flex max-w-7xl items-end justify-between gap-4 px-5 sm:px-8">
           <Reveal>
             <p className="font-display text-xl text-marigold">रंगमंचावर</p>
-            <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">{t('home.onStage')}</h2>
-            <p className="mt-2 font-body text-sm text-cream/50">{t('home.scrollHint')}</p>
+            <h2 className="mt-1 font-display text-3xl text-cream sm:text-5xl">On stage</h2>
+            <p className="mt-2 font-body text-sm text-cream/50">Drag to see more</p>
           </Reveal>
 
           <Reveal delay={120} className="flex shrink-0 gap-2">

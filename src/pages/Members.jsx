@@ -1,5 +1,6 @@
 import members from '../content/members.json';
 import { PageHeader } from '../components/PageHeader';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { Needed, NeededBox, NeededPanel } from '../components/Needed';
@@ -53,7 +54,8 @@ export function Members() {
         lead="The people behind the sound."
       />
 
-      <section className="texture-cloth">
+      <section className="texture-cloth relative overflow-hidden">
+        <ScatteredInstruments preset="march" tone="light" />
         <div className="mx-auto max-w-7xl px-5 py-18 sm:px-8">
           {/* Group shot */}
           <Reveal>

@@ -1,86 +1,374 @@
 {
-  "_readme": "One entry per instrument the band actually plays. The list below is the brief's suggested set and is UNCONFIRMED — the performance photos show guitar, bass, keyboard, flute, tabla, dholki and harmonium rather than ektara and tuntune, so this needs a pass. Bilingual fields take { en, mr }; leave either null and the page shows a marker for it.",
+  "_readme": "The folk instruments of Maharashtra. Unlike the rest of src/content, the descriptions here are NOT placeholders — they were researched from the sources listed in each entry (Wikipedia, Google Arts & Culture, Swar Classical, Enroute Indian History) and describe the instrument itself, not Folklok. What is still unknown is which of these Folklok actually plays: that is the `played` flag, and it is null on every entry until the band says. Set it to true and the instrument is marked as one of ours.",
+  "_marathi": "The Marathi was written alongside the English, not machine-translated, but a native speaker should still read it before launch.",
+
+  "families": {
+    "percussion": { "en": "Drums", "mr": "चर्मवाद्ये" },
+    "idiophone":  { "en": "Struck and shaken", "mr": "घनवाद्ये" },
+    "string":     { "en": "Strings", "mr": "तंतुवाद्ये" },
+    "wind":       { "en": "Wind", "mr": "सुषिरवाद्ये" }
+  },
 
   "items": [
     {
       "slug": "dholki",
       "mr": "ढोलकी",
       "en": "Dholki",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
+      "family": "percussion",
+      "role": {
+        "en": "The drum Lavani is danced to. One player, two heads, hands only — the small head answers the big one all night.",
+        "mr": "लावणीचा ठेका धरणारं वाद्य. एकच वादक, दोन्ही बाजू, फक्त हात — छोटी बाजू मोठीला उत्तर देत रात्रभर वाजते."
+      },
+      "history": {
+        "en": "A barrel of seasoned jackfruit, sheesham or mango wood with a skin at each end: a small treble head on one side, a wider bass head on the other. The bass head carries a paste of tar, clay and sand called masala, which weighs it down and drops its pitch. It is the lead drum of Tamasha and Lavani, and it keeps time for a Lezim troupe.",
+        "mr": "फणस, शिसव किंवा आंब्याच्या लाकडाचा पोकळ ढाचा आणि दोन्ही तोंडांना कातडं — एका बाजूला बारीक, दुसऱ्या बाजूला रुंद. रुंद बाजूला डांबर, माती आणि वाळूचा 'मसाला' लावतात, त्यानं नाद खोल होतो. तमाशा आणि लावणीतलं मुख्य वाद्य; लेझीम पथकाचा ठेकाही हेच धरतं."
+      },
+      "source": "https://en.wikipedia.org/wiki/Dholak",
       "image": null,
       "audio": null,
-      "confirmed": false
-    },
-    {
-      "slug": "tabla",
-      "mr": "तबला",
-      "en": "Tabla",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
-      "image": null,
-      "audio": null,
-      "confirmed": false
-    },
-    {
-      "slug": "harmonium",
-      "mr": "पेटी",
-      "en": "Harmonium",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
-      "image": null,
-      "audio": null,
-      "confirmed": false
-    },
-    {
-      "slug": "bansuri",
-      "mr": "बासरी",
-      "en": "Bansuri",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
-      "image": null,
-      "audio": null,
-      "confirmed": false
+      "played": null
     },
     {
       "slug": "dhol",
       "mr": "ढोल",
       "en": "Dhol",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
+      "family": "percussion",
+      "role": {
+        "en": "The big procession drum. Slung from the shoulder and struck with sticks, it is meant to be heard down a whole street.",
+        "mr": "मिरवणुकीचा ढोल. गळ्यात अडकवून टिपरूनं वाजवतात — आवाज अख्ख्या गल्लीत घुमावा हाच हेतू."
+      },
+      "history": {
+        "en": "A large double-headed barrel drum found across the subcontinent, with its own regional form in Maharashtra and the Konkan. Here it leads Ganeshotsav processions and accompanies Powada; in Warli villages it plays alongside the tarpa at weddings.",
+        "mr": "दोन्ही तोंडांना कातडं असलेला मोठा ढोल. उपखंडभर आढळतो, पण महाराष्ट्र आणि कोकणात त्याचं स्वतःचं रूप आहे. गणेशोत्सवाच्या मिरवणुकीत तो पुढं असतो, पोवाड्याला साथ करतो, आणि वारली गावांत लग्नात तारप्यासोबत वाजतो."
+      },
+      "source": "https://en.wikipedia.org/wiki/Dhol",
       "image": null,
       "audio": null,
-      "confirmed": false
+      "played": null
     },
     {
-      "slug": "manjira",
-      "mr": "मंजिरी",
-      "en": "Manjira",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
+      "slug": "tasha",
+      "mr": "ताशा",
+      "en": "Tasha",
+      "family": "percussion",
+      "role": {
+        "en": "The sharp one. A single high-pitched head cutting across the dhol, played with two thin canes.",
+        "mr": "कडक आवाजाचं वाद्य. एकाच बाजूला कातडं, दोन बारीक काड्यांनी वाजवतात — ढोलाच्या गडगडाटातून त्याचा आवाज वर येतो."
+      },
+      "history": {
+        "en": "A small, shallow kettle drum with a metal bowl for a body and one tightly tuned head. Dhol and tasha are played together in pathaks — the drum troupes that lead a mandal's Ganpati through the streets. The pathak format was organised in Pune in the 1960s by Dr Appasaheb Pendse, first as a school fitness and teamwork drill.",
+        "mr": "धातूच्या कढईसारखा लहान ढाचा आणि घट्ट ताणलेली एकच बाजू. ढोल-ताशा एकत्रच वाजतात — मंडळाचा गणपती मिरवणाऱ्या पथकांत. पुण्यात १९६० च्या दशकात डॉ. आप्पासाहेब पेंडसे यांनी शाळकरी मुलांचा व्यायाम आणि सांघिक शिस्त म्हणून पथकाची रचना उभी केली."
+      },
+      "source": "https://www.taalinc.net/dhol-tasha-history-evolution-and-cultural-relevance-introduction/",
       "image": null,
       "audio": null,
-      "confirmed": false
+      "played": null
     },
     {
-      "slug": "ektara",
-      "mr": "एकतारी",
-      "en": "Ektara",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
+      "slug": "sambal",
+      "mr": "संबळ",
+      "en": "Sambal",
+      "family": "percussion",
+      "role": {
+        "en": "Two drums tied at the waist, one high and one low, played with a straight stick and a curved one.",
+        "mr": "कमरेला बांधलेले दोन नगारे — एक चढा, एक खोल. एक सरळ टिपरू, एक वाकडं."
+      },
+      "history": {
+        "en": "Two joined wooden drums of unequal pitch, each headed with skin. The straight stick works the lower head for bass; the curved stick works the higher one, and can bend the pitch as it strikes. It is the drum of the Gondhal — the night-long ritual performance for Mahalaxmi and Renuka — carried by Gondhali performers, and it is also found among the Kokna of Dadra and Nagar Haveli, Goa and north Karnataka.",
+        "mr": "जोडलेले दोन लाकडी नगारे, दोन्हींचा नाद वेगळा, दोन्हींवर कातडं. सरळ टिपरू खालच्या नादाच्या बाजूवर, वाकडं टिपरू वरच्या बाजूवर — आणि वाकड्या टिपरानं नाद सरकवताही येतो. महालक्ष्मी-रेणुकेच्या गोंधळात गोंधळी हेच वाद्य वाजवतात. दादरा-नगर हवेली, गोवा आणि उत्तर कर्नाटकातल्या कोकणा समाजातही ते आढळतं."
+      },
+      "source": "https://en.wikipedia.org/wiki/Sambal_(drum)",
       "image": null,
       "audio": null,
-      "confirmed": false
+      "played": null
+    },
+    {
+      "slug": "halgi",
+      "mr": "हलगी",
+      "en": "Halgi",
+      "family": "percussion",
+      "role": {
+        "en": "A flat frame drum held in one hand and beaten with two thin sticks. Loud, dry, and impossible to talk over.",
+        "mr": "एका हातात धरून दोन बारीक काड्यांनी वाजवायचं सपाट डफलीसारखं वाद्य. आवाज कोरडा आणि इतका मोठा की त्यावर बोलणं ऐकू येत नाही."
+      },
+      "history": {
+        "en": "A circular wooden hoop with leather stretched across it and laced tight with cord around the rim, tensioned by an iron ring at the back. One hand holds the frame and one of the sticks; the other hand strikes. It is popular through Maharashtra and Gujarat, and turns up wherever a crowd has to be gathered — Lavani, Tamasha, processions, announcements.",
+        "mr": "लाकडाची गोल कड, त्यावर ताणलेलं कातडं आणि कडेनं दोरीची घट्ट वीण; मागं लोखंडी कडं देऊन ताण बसवतात. एका हातात चौकट आणि एक काडी, दुसऱ्या हातानं ठोका. महाराष्ट्र आणि गुजरातभर वाजते — लावणी, तमाशा, मिरवणूक, दवंडी; जिथं गर्दी जमवायची तिथं हलगी."
+      },
+      "source": "https://www.swarclassical.com/Instruments/halgi/",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "daf",
+      "mr": "डफ",
+      "en": "Daf",
+      "family": "percussion",
+      "role": {
+        "en": "A wide frame drum struck with the open hand — the drum a Powada is sung over.",
+        "mr": "रुंद चौकटीचं, तळहातानं वाजवायचं वाद्य — पोवाडा याच्याच साथीनं गायला जातो."
+      },
+      "history": {
+        "en": "A round wooden frame with a single thin head of goat skin, sometimes with jingles set into the rim. It travelled into South Asia from Persia and is played across a huge area; in Marathwada it accompanies Sufi-influenced singing, and in Maharashtra generally it is the shahir's drum.",
+        "mr": "लाकडाची गोल चौकट आणि बकऱ्याच्या कातड्याचं एकच पातळ पान; कधी कडेत घुंगरं बसवलेली. पर्शियातून दक्षिण आशियात आलेलं हे वाद्य फार मोठ्या प्रदेशात वाजतं. मराठवाड्यात सुफी अंगाच्या गायनाला साथ करतं, आणि एकूण महाराष्ट्रात ते शाहिराचं वाद्य आहे."
+      },
+      "source": "https://en.wikipedia.org/wiki/Daf",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "khanjiri",
+      "mr": "खंजिरी",
+      "en": "Khanjiri",
+      "family": "percussion",
+      "role": {
+        "en": "A small frame drum with jingles in the rim — one hand holds it, the other does everything else.",
+        "mr": "कडेत घुंगरं बसवलेलं लहानसं डफलीवजा वाद्य. एका हातात धरायचं, दुसऱ्या हातानं सगळं काम."
+      },
+      "history": {
+        "en": "The hand drum of the singer who travels alone: light enough to carry all day, loud enough to hold a crowd. It is used in bharud and in the devotional and tribal singing traditions of Maharashtra.",
+        "mr": "एकट्यानं फिरणाऱ्या गायकाचं वाद्य — दिवसभर वागवता येईल इतकं हलकं आणि गर्दी थांबवेल इतकं खणखणीत. भारुडात आणि महाराष्ट्रातल्या भक्तिपर व आदिवासी गायनात वाजतं."
+      },
+      "source": "https://enrouteindianhistory.com/folk-musical-instruments-of-maharashtra/",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "tabla",
+      "mr": "तबला",
+      "en": "Tabla",
+      "family": "percussion",
+      "role": {
+        "en": "A pair of drums — a tuned wooden one for the right hand, a metal bass for the left.",
+        "mr": "जोडीचं वाद्य — उजव्या हाताला सुरात लावलेला लाकडी डग्गा, डाव्या हाताला धातूचा बाया."
+      },
+      "history": {
+        "en": "Since the eighteenth century the principal percussion of Hindustani classical music, and equally at home in bhajan and kirtan. The black circle on each head — the syahi, a paste of iron filings and flour — is what gives the tabla its pitched, ringing tone rather than a flat thud.",
+        "mr": "अठराव्या शतकापासून हिंदुस्थानी शास्त्रीय संगीताचं मुख्य तालवाद्य; भजन-कीर्तनातही तितकंच घरचं. पानावरचं काळं वर्तुळ — शाई, लोखंडाचा कीस आणि पिठाचा लेप — यामुळंच तबल्याला नुसता थाप न राहता सुरेल घुमारा येतो."
+      },
+      "source": "https://en.wikipedia.org/wiki/Tabla",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "mridang",
+      "mr": "मृदंग",
+      "en": "Mridang",
+      "family": "percussion",
+      "role": {
+        "en": "The barrel drum of warkari kirtan — laid across the lap, both hands working opposite ends.",
+        "mr": "वारकरी कीर्तनातला मृदंग — मांडीवर आडवा घेऊन दोन्ही टोकांना दोन्ही हात."
+      },
+      "history": {
+        "en": "A two-headed barrel drum played horizontally. The warkari mridang is closer to the north Indian pakhawaj than to the south Indian mridangam of Carnatic music, though they share the name and the shape. It carries the bhajani cycle through a dindi.",
+        "mr": "दोन्ही तोंडांना कातडं असलेला, आडवा वाजवायचा मृदंग. वारकरी मृदंग कर्नाटक संगीतातल्या दक्षिणी मृदंगमपेक्षा उत्तरेच्या पखवाजाच्या जवळचा आहे — नाव आणि आकार तेवढा सारखा. दिंडीचा भजनी ठेका हाच पेलतो."
+      },
+      "source": "https://en.wikipedia.org/wiki/Mridangam",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "ghumat",
+      "mr": "घुमट",
+      "en": "Ghumat",
+      "family": "percussion",
+      "role": {
+        "en": "An earthen pot open at both ends, one mouth skinned. The player's palm over the open end bends the note.",
+        "mr": "दोन्ही तोंडं उघडी असलेलं मातीचं मडकं, एका तोंडावर कातडं. मोकळ्या तोंडावर तळहात फिरवला की नाद वळतो."
+      },
+      "history": {
+        "en": "The pot drum of the Konkan coast and Goa, played at fisherfolk celebrations and in Goan folk forms. Its head was traditionally monitor lizard skin; that is now protected, so goat skin and synthetic heads have replaced it. The Government of Goa declared the ghumot a heritage instrument in August 2019.",
+        "mr": "कोकणपट्टी आणि गोव्याचं मडक्याचं वाद्य — कोळी समाजाच्या उत्सवांत आणि गोमंतकीय लोकप्रकारांत वाजतं. पूर्वी त्यावर घोरपडीचं कातडं ताणत; ती आता संरक्षित असल्यानं बकऱ्याचं किंवा कृत्रिम पान वापरतात. ऑगस्ट २०१९ मध्ये गोवा सरकारनं घुमटाला वारसा-वाद्याचा दर्जा दिला."
+      },
+      "source": "https://en.wikipedia.org/wiki/Ghumot",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "taal",
+      "mr": "टाळ",
+      "en": "Taal",
+      "family": "idiophone",
+      "role": {
+        "en": "A pair of small brass cymbals. Everyone in a dindi can play them, which is rather the point.",
+        "mr": "पितळेच्या दोन लहान टाळ्या. दिंडीत प्रत्येकाला वाजवता येतात — आणि तोच त्यांचा अर्थ आहे."
+      },
+      "history": {
+        "en": "Also called manjira or kartal. The name comes from the Sanskrit tala, a clap. They keep the beat under bhajan, kirtan and harinam across India; on the Pandharpur wari, thousands of them keep one cycle together for a fortnight.",
+        "mr": "यालाच मंजिरी किंवा करताल म्हणतात. 'ताल' हा शब्द संस्कृत ताल = टाळी यावरून. भारतभर भजन, कीर्तन आणि हरिनामाचा ठेका हेच धरतात; पंढरपूरच्या वारीत हजारो टाळ पंधरवडाभर एकच ठेका सांभाळतात."
+      },
+      "source": "https://en.wikipedia.org/wiki/Taal_(instrument)",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "chiplya",
+      "mr": "चिपळ्या",
+      "en": "Chiplya",
+      "family": "idiophone",
+      "role": {
+        "en": "Wooden clappers with loose brass discs, one pair in each hand. Dry, clicking, relentless.",
+        "mr": "लाकडी फळ्या आणि त्यात सैल बसवलेल्या पितळी चकत्या — दोन्ही हातांत एकेक जोडी. कोरडा, खणखणीत, न थांबणारा नाद."
+      },
+      "history": {
+        "en": "The kartal of north India is known in Maharashtra as chipalya. Two carved wooden blades are held in one hand and clapped together; brass discs set into slots jingle on every stroke. They are the ordinary hand percussion of warkari bhajan and kirtan.",
+        "mr": "उत्तर भारतातल्या करतालांना महाराष्ट्रात चिपळ्या म्हणतात. कोरलेल्या दोन लाकडी पट्ट्या एका हातात धरून एकमेकांवर आपटायच्या; खाचांत बसवलेल्या पितळी चकत्या प्रत्येक ठोक्याला वाजतात. वारकरी भजन-कीर्तनातलं हे नेहमीचं हातवाद्य."
+      },
+      "source": "https://en.wikipedia.org/wiki/Khartal",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "lezim",
+      "mr": "लेझीम",
+      "en": "Lezim",
+      "family": "idiophone",
+      "role": {
+        "en": "A small bow strung with a chain of metal discs. It is shaken, not struck — and it is a drill as much as an instrument.",
+        "mr": "धातूच्या चकत्यांची साखळी ओढलेलं छोटं धनुष्य. ठोकायचं नाही, हलवायचं — आणि ते वाद्य जितकं आहे तितकाच व्यायामही आहे."
+      },
+      "history": {
+        "en": "The dance takes its name from the instrument. Twenty or more players move in rows, twos, fours or a circle, with a dholki keeping time; the movements are strenuous enough that Maharashtrian schools and militias have long used lezim as a fitness drill.",
+        "mr": "नाचाला नाव वाद्यावरूनच पडलं. वीस-पंचवीस जण रांगेत, जोडीनं, चौघा-चौघांत किंवा गोलात हलतात आणि ढोलकी ठेका धरते; हालचाली इतक्या जोरकस की महाराष्ट्रातल्या शाळा आणि पथकांत लेझीम हा वर्षानुवर्षं व्यायामाचा प्रकार आहे."
+      },
+      "source": "https://en.wikipedia.org/wiki/Lezim",
+      "image": null,
+      "audio": null,
+      "played": null
     },
     {
       "slug": "tuntune",
       "mr": "तुणतुणे",
       "en": "Tuntune",
-      "role": { "en": null, "mr": null },
-      "history": { "en": null, "mr": null },
+      "family": "string",
+      "role": {
+        "en": "One string, one note, plucked on every beat. It holds the singer's pitch so the singer doesn't have to.",
+        "mr": "एकच तार, एकच सूर, प्रत्येक ठोक्याला छेडायची. गायकाचा सूर ती सांभाळते, म्हणून गायकाला तो सांभाळावा लागत नाही."
+      },
+      "history": {
+        "en": "A hollow wooden cylinder closed with skin, with a bamboo stick fixed along its side carrying a single gut or wire string. It is native to Maharashtra — north of the Narmada the same idea is called ektara. Shahirs singing Powada and Gondhali performers both carry one, and pressing the bamboo bends the drone.",
+        "mr": "पोकळ लाकडी डबा, तोंडावर कातडं, आणि बाजूला बांबूची काठी जिच्यावर एकच तार. हे मूळ महाराष्ट्राचं वाद्य — नर्मदेच्या उत्तरेला त्याच कल्पनेला एकतारा म्हणतात. पोवाडा गाणारे शाहीर आणि गोंधळी दोघेही तुणतुणे बाळगतात; बांबू दाबला की सूर वळतो."
+      },
+      "source": "https://powade.com/powade-types-and-accompaniments/",
       "image": null,
       "audio": null,
-      "confirmed": false
+      "played": null
+    },
+    {
+      "slug": "ektari",
+      "mr": "एकतारी",
+      "en": "Ektari",
+      "family": "string",
+      "role": {
+        "en": "A drone in a gourd. Plucked with one finger, walked with for miles.",
+        "mr": "भोपळ्यातला सूर. एका बोटानं छेडायची आणि कोसन‌कोस चालत न्यायची."
+      },
+      "history": {
+        "en": "A gourd resonator covered with skin, with a bamboo neck pushed through it and a single string running its length. Wandering singers and ascetics have used it to accompany their own voices for centuries, and it is the instrument most associated with the bhakti singer walking between villages.",
+        "mr": "भोपळ्याचा नाद-कोश, त्यावर कातडं, आतून आरपार गेलेली बांबूची दांडी आणि एकच तार. भटके गायक आणि साधू शतकानुशतकं स्वतःच्या गळ्याला हिचीच साथ देत आले; गावोगाव चालणाऱ्या भक्तिगायकाचं हेच वाद्य."
+      },
+      "source": "https://en.wikipedia.org/wiki/Ektara",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "bansuri",
+      "mr": "बासरी",
+      "en": "Bansuri",
+      "family": "wind",
+      "role": {
+        "en": "The melody, usually. A side-blown bamboo flute with no keys at all.",
+        "mr": "बहुतेकदा चालीची जबाबदारी हिच्यावर. आडवी धरून फुंकायची बांबूची बासरी — एकही चावी नाही."
+      },
+      "history": {
+        "en": "A single hollow shaft of bamboo with six or seven finger holes and a blow hole near the closed end. There is no mechanism: every note is made by how much of a hole the finger leaves open, which is why a bansuri can slide between notes the way a voice does. Longer flutes sound lower; the Marathi folk version is often called pawa.",
+        "mr": "बांबूचा एकच पोकळ तुकडा, सहा-सात बोटांची भोकं आणि बंद टोकाजवळ फुंकीचं भोक. यंत्रणा काहीच नाही — बोटानं भोक किती उघडं ठेवलं यावर सूर ठरतो, म्हणूनच बासरी गळ्यासारखी सुरातून सुरात सरकते. बासरी जितकी लांब तितका नाद खोल; लोकसंगीतातल्या रूपाला 'पावा' म्हणतात."
+      },
+      "source": "https://en.wikipedia.org/wiki/Bansuri",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "sanai",
+      "mr": "सनई",
+      "en": "Sanai",
+      "family": "wind",
+      "role": {
+        "en": "The sound of a wedding arriving. A double reed and a flared bell, played until the procession is inside.",
+        "mr": "लग्न आल्याची वर्दी देणारा सूर. दुहेरी पात्याची सनई, वऱ्हाड आत येईपर्यंत वाजतच राहते."
+      },
+      "history": {
+        "en": "A wooden shawm with a double reed at the mouth and a metal bell at the far end, related to south India's nadaswaram. It was one of the nine instruments of the Mughal court, and in Maharashtra it plays at weddings and temple processions, almost always paired with a drum.",
+        "mr": "तोंडाशी दुहेरी पातं आणि दुसऱ्या टोकाला धातूचा पसरट भोंगा असलेलं लाकडी वाद्य; दक्षिणेच्या नादस्वरमशी नातं. मोगल दरबारातल्या नऊ वाद्यांपैकी एक. महाराष्ट्रात लग्नकार्यात आणि देवळाच्या मिरवणुकीत वाजते — जवळजवळ नेहमी कुठल्या ना कुठल्या ढोलाच्या साथीनं."
+      },
+      "source": "https://en.wikipedia.org/wiki/Shehnai",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "tarpa",
+      "mr": "तारपा",
+      "en": "Tarpa",
+      "family": "wind",
+      "role": {
+        "en": "A gourd, two bamboo pipes and a leaf horn. Drone and melody at once, and it does not stop to breathe.",
+        "mr": "एक भोपळा, दोन बांबूच्या नळ्या आणि पानाचा भोंगा. सूर आणि चाल एकाच वेळी — आणि श्वास घ्यायला ते थांबत नाही."
+      },
+      "history": {
+        "en": "The Warli instrument, made and played by the Warli of Maharashtra and Gujarat. A dried bottle gourd forms the wind chest; two bamboo pipes run from it, one holding a drone and one carrying the tune — players call them the male and the female — and a horn of dried palm leaf flares at the end. It runs two to six feet long and needs circular breathing, so the sound never breaks. It is played at harvest, at Holi and at weddings, sometimes from dusk to dawn.",
+        "mr": "वारली समाजाचं वाद्य — महाराष्ट्र आणि गुजरातचे वारली तेच बनवतात आणि तेच वाजवतात. वाळलेल्या दुधी भोपळ्याचा हवेचा कोश, त्यातून निघणाऱ्या दोन बांबूच्या नळ्या — एक सूर धरते, दुसरी चाल घेते; वादक त्यांना नर आणि मादी म्हणतात — आणि टोकाला वाळलेल्या पानाचा पसरट भोंगा. लांबी दोन ते सहा फूट. वाजवताना नाकानं श्वास घेत तोंडानं सोडत राहावं लागतं, म्हणून नाद कधीच तुटत नाही. कापणी, होळी आणि लग्नात — कधी संध्याकाळपासून पहाटेपर्यंत."
+      },
+      "source": "https://en.wikipedia.org/wiki/Tarpa_(instrument)",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "tutari",
+      "mr": "तुतारी",
+      "en": "Tutari",
+      "family": "wind",
+      "role": {
+        "en": "Not a tune — an announcement. One long blast and everyone turns around.",
+        "mr": "ही चाल नाही, ही वर्दी आहे. एक लांब फुंकर आणि सगळे मागं वळून बघतात."
+      },
+      "history": {
+        "en": "A curved horn, originally of buffalo or bullock horn and later of brass, made either as a long S-curve or a crescent. It has no reed and no finger holes; it signals rather than plays. It heralded kings and palanquins and opened battles — it is recorded as a ceremonial salute in the court of Chhatrapati Shivaji Maharaj — and it still sounds at weddings, festivals and political rallies.",
+        "mr": "वाकडं शिंग — पूर्वी म्हशीच्या किंवा बैलाच्या शिंगाचं, नंतर पितळेचं; लांब इंग्रजी S सारखं किंवा चंद्रकोरीसारखं. ना पातं, ना बोटांची भोकं — ती वाजत नाही, ती इशारा देते. राजे आणि पालख्यांची वर्दी तुतारीच देत असे, लढाईची सुरुवातही; छत्रपती शिवाजी महाराजांच्या दरबारातल्या मानाच्या सलामीत तिची नोंद आहे. आजही लग्न, उत्सव आणि सभांमध्ये ती घुमते."
+      },
+      "source": "https://www.swarclassical.com/Instruments/tutari/",
+      "image": null,
+      "audio": null,
+      "played": null
+    },
+    {
+      "slug": "peti",
+      "mr": "पेटी",
+      "en": "Harmonium",
+      "family": "wind",
+      "role": {
+        "en": "One hand pumps, one hand plays. It holds the melody and the drone together, sitting on the floor.",
+        "mr": "एक हात भाता ओढतो, दुसरा सूर काढतो. जमिनीवर बसून चाल आणि सूर दोन्ही तीच सांभाळते."
+      },
+      "history": {
+        "en": "A free-reed keyboard — air pushed past thin metal tongues — brought to India by nineteenth-century missionaries and rebuilt here as a floor instrument with a hand bellows instead of foot pedals. It became the standard accompaniment for Tamasha, bhajan, natya sangeet and almost every stage where someone sings in Marathi.",
+        "mr": "पातळ धातूच्या जिभल्यांवरून हवा सोडून सूर काढणारं वाद्य. एकोणिसाव्या शतकात मिशनऱ्यांबरोबर भारतात आलं आणि इथं त्याचं रूपच बदललं — पायाच्या पॅडलऐवजी हाताचा भाता, आणि जमिनीवर बसून वाजवायची बैठक. तमाशा, भजन, नाट्यसंगीत — मराठीत जिथं कुणी गातं तिथं पेटी आहे."
+      },
+      "source": "https://en.wikipedia.org/wiki/Pump_organ",
+      "image": null,
+      "audio": null,
+      "played": null
     }
   ]
 }

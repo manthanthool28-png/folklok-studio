@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import blog from '../content/blog.json';
 import { PageHeader } from '../components/PageHeader';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { GlassCard, GlassLayer } from '../components/Glass';
@@ -67,7 +68,8 @@ export function Blog() {
         lead="Notes on the songs, the road, and why any of this is worth doing."
       />
 
-      <section className="texture-cloth">
+      <section className="texture-cloth relative overflow-hidden">
+        <ScatteredInstruments preset="reeds" tone="light" />
         <div className="mx-auto max-w-4xl px-5 py-18 sm:px-8">
           <Reveal>
             <AuthorCard />

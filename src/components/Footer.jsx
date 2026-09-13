@@ -6,11 +6,9 @@ import { Socials } from './Socials';
 import { Needed } from './Needed';
 import { IconMail, IconPhone } from './Icons';
 import { Swirl } from './Swirl';
-import { useLang } from '../lib/lang';
 import { Aurora } from './Aurora';
 
 export function Footer() {
-  const { t } = useLang();
   const year = new Date().getFullYear();
 
   return (
@@ -29,7 +27,7 @@ export function Footer() {
         </div>
 
         <nav aria-label="Footer">
-          <h2 className="font-display text-sm uppercase tracking-[0.18em] text-cream/50">{t('common.explore')}</h2>
+          <h2 className="font-display text-sm uppercase tracking-[0.18em] text-cream/50">Explore</h2>
           <ul className="mt-4 space-y-2.5">
             {NAV_LINKS.map((link) => (
               <li key={link.to}>
@@ -37,7 +35,7 @@ export function Footer() {
                   to={link.to}
                   className="font-body text-cream/80 transition-colors hover:text-marigold"
                 >
-                  {t(`nav.${link.key}`)}
+                  {link.label}
                 </Link>
               </li>
             ))}
@@ -45,7 +43,7 @@ export function Footer() {
         </nav>
 
         <div>
-          <h2 className="font-display text-sm uppercase tracking-[0.18em] text-cream/50">{t('common.bookings')}</h2>
+          <h2 className="font-display text-sm uppercase tracking-[0.18em] text-cream/50">Bookings</h2>
           <ul className="mt-4 space-y-3">
             <li className="flex items-center gap-2.5">
               <IconMail className="h-4.5 w-4.5 shrink-0 text-marigold" />
@@ -79,7 +77,7 @@ export function Footer() {
             to="/booking"
             className="mt-6 inline-block rounded-full bg-marigold px-5 py-2.5 font-body text-sm font-600 text-espresso shadow-[0_6px_22px_rgba(245,183,0,0.3)] transition-all duration-300 hover:bg-marigold-light hover:shadow-[0_10px_30px_rgba(245,183,0,0.45)]"
           >
-            {t('common.bookFolklok')}
+            Book Folklok
           </Link>
         </div>
       </div>

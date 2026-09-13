@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import wordmark from '../assets/folklok-wordmark.png';
-import { useLang } from '../lib/lang';
 
 export const NAV_LINKS = [
   { to: '/', key: 'home', label: 'Home', mr: 'मुख्यपृष्ठ' },
@@ -20,7 +19,7 @@ export const NAV_LINKS = [
  * navbar feel native: the eye tracks one object moving, so the change of
  * section reads as continuous.
  */
-function useSlidingIndicator(pathname, lang) {
+function useSlidingIndicator(pathname) {
   const listRef = useRef(null);
   const [box, setBox] = useState(null);
 
@@ -40,7 +39,7 @@ function useSlidingIndicator(pathname, lang) {
     document.fonts?.ready.then(measure).catch(() => {});
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
-  }, [pathname, lang]);
+  }, [pathname]);
 
   return { listRef, box };
 }
@@ -57,8 +56,7 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const { t } = useLang();
-  const { listRef, box } = useSlidingIndicator(pathname, t('nav.home'));
+  const { listRef, box } = useSlidingIndicator(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -161,7 +159,7 @@ export function Nav() {
                     }`
                   }
                 >
-                  <span className="text-lg">{t(`nav.${link.key}`)}</span>
+                  <span className="text-lg">{link.label}</span>
                   <span className="font-display text-sm opacity-60">{link.mr}</span>
                 </NavLink>
               </li>

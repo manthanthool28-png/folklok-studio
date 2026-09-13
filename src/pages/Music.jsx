@@ -2,6 +2,7 @@ import { useState } from 'react';
 import music from '../content/music.json';
 import site from '../content/site.json';
 import { PageHeader } from '../components/PageHeader';
+import { ScatteredInstruments } from '../components/ScatteredInstruments';
 import { Reveal } from '../components/Reveal';
 import { Divider } from '../components/Divider';
 import { NeededPanel } from '../components/Needed';
@@ -66,7 +67,8 @@ export function Music() {
         lead="Videos, singles and everything we have put out."
       />
 
-      <section className="texture-cloth">
+      <section className="texture-cloth relative overflow-hidden">
+        <ScatteredInstruments preset="reeds" tone="light" />
         <div className="mx-auto max-w-6xl px-5 py-18 sm:px-8">
           {/* Videos */}
           <Reveal>
